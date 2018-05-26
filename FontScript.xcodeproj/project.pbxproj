@@ -10,6 +10,10 @@
 		035AD8C220B8CC97006494B7 /* FontScript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 035AD8B820B8CC97006494B7 /* FontScript.framework */; };
 		035AD8C720B8CC97006494B7 /* FontScriptTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 035AD8C620B8CC97006494B7 /* FontScriptTests.m */; };
 		035AD8C920B8CC97006494B7 /* FontScript.h in Headers */ = {isa = PBXBuildFile; fileRef = 035AD8BB20B8CC97006494B7 /* FontScript.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		035AD8D420B8CD68006494B7 /* Script.h in Headers */ = {isa = PBXBuildFile; fileRef = 035AD8D220B8CD68006494B7 /* Script.h */; };
+		035AD8D520B8CD68006494B7 /* Script.m in Sources */ = {isa = PBXBuildFile; fileRef = 035AD8D320B8CD68006494B7 /* Script.m */; };
+		035AD92020B8FFB3006494B7 /* Python.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 035AD91F20B8FFB3006494B7 /* Python.framework */; };
+		035AD92320B9044D006494B7 /* multiply.py in Resources */ = {isa = PBXBuildFile; fileRef = 035AD92220B9044D006494B7 /* multiply.py */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +33,11 @@
 		035AD8C120B8CC97006494B7 /* FontScriptTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FontScriptTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		035AD8C620B8CC97006494B7 /* FontScriptTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FontScriptTests.m; sourceTree = "<group>"; };
 		035AD8C820B8CC97006494B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		035AD8D220B8CD68006494B7 /* Script.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Script.h; sourceTree = "<group>"; };
+		035AD8D320B8CD68006494B7 /* Script.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Script.m; sourceTree = "<group>"; };
+		035AD91F20B8FFB3006494B7 /* Python.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Python.framework; path = ../../../../Library/Frameworks/Python.framework; sourceTree = "<group>"; };
+		035AD92220B9044D006494B7 /* multiply.py */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = text.script.python; path = multiply.py; sourceTree = "<group>"; tabWidth = 4; };
+		035AD92420BA1262006494B7 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				035AD92020B8FFB3006494B7 /* Python.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,9 +63,11 @@
 		035AD8AE20B8CC97006494B7 = {
 			isa = PBXGroup;
 			children = (
+				035AD92420BA1262006494B7 /* README.md */,
 				035AD8BA20B8CC97006494B7 /* FontScript */,
 				035AD8C520B8CC97006494B7 /* FontScriptTests */,
 				035AD8B920B8CC97006494B7 /* Products */,
+				035AD8D620B8E5ED006494B7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -73,6 +85,8 @@
 			children = (
 				035AD8BB20B8CC97006494B7 /* FontScript.h */,
 				035AD8BC20B8CC97006494B7 /* Info.plist */,
+				035AD8D220B8CD68006494B7 /* Script.h */,
+				035AD8D320B8CD68006494B7 /* Script.m */,
 			);
 			path = FontScript;
 			sourceTree = "<group>";
@@ -80,10 +94,27 @@
 		035AD8C520B8CC97006494B7 /* FontScriptTests */ = {
 			isa = PBXGroup;
 			children = (
+				035AD92120B9042C006494B7 /* scripts */,
 				035AD8C620B8CC97006494B7 /* FontScriptTests.m */,
 				035AD8C820B8CC97006494B7 /* Info.plist */,
 			);
 			path = FontScriptTests;
+			sourceTree = "<group>";
+		};
+		035AD8D620B8E5ED006494B7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				035AD91F20B8FFB3006494B7 /* Python.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		035AD92120B9042C006494B7 /* scripts */ = {
+			isa = PBXGroup;
+			children = (
+				035AD92220B9044D006494B7 /* multiply.py */,
+			);
+			path = scripts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -94,6 +125,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				035AD8C920B8CC97006494B7 /* FontScript.h in Headers */,
+				035AD8D420B8CD68006494B7 /* Script.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -183,6 +215,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				035AD92320B9044D006494B7 /* multiply.py in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -193,6 +226,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				035AD8D520B8CD68006494B7 /* Script.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,7 +375,9 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				FRAMEWORK_VERSION = A;
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = FontScript/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -366,7 +402,9 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				FRAMEWORK_VERSION = A;
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = FontScript/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (

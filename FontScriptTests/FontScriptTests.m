@@ -7,16 +7,25 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "Script.h"
 
 @interface FontScriptTests : XCTestCase
-
+{
+  NSBundle *testBundle;
+}
 @end
 
 @implementation FontScriptTests
 
 - (void)setUp {
-    [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+  [super setUp];
+
+  NSUInteger i = [NSBundle.allBundles indexOfObjectPassingTest:^BOOL(NSBundle * _Nonnull obj,
+                                                                     NSUInteger idx,
+                                                                     BOOL * _Nonnull stop) {
+    return [obj.bundleIdentifier isEqualToString:@"com.typista.FontScriptTests"];
+  }];
+  testBundle = NSBundle.allBundles[i];
 }
 
 - (void)tearDown {
@@ -25,15 +34,9 @@
 }
 
 - (void)testExample {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
-}
-
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
+  NSString *bundlePath = testBundle.resourceURL.path;
+  Script *script = [[Script alloc] initWithPath:bundlePath];
+  [script runModule:@"multiply" function:@"multiply" arguments:@[@3, @2]];
 }
 
 @end
