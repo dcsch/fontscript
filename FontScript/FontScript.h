@@ -14,6 +14,7 @@ FOUNDATION_EXPORT double FontScriptVersionNumber;
 //! Project version string for FontScript.
 FOUNDATION_EXPORT const unsigned char FontScriptVersionString[];
 
-// In this header, you should import all the public headers of your framework using statements like #import <FontScript/PublicHeader.h>
-
-
+#import <FontScript/Script.h>
+#import <FontScript/Font.h>
+#import <FontScript/Layer.h>
+#import <FontScript/Glyph.h>

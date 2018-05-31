@@ -39,4 +39,10 @@
   [script runModule:@"multiply" function:@"multiply" arguments:@[@3, @2]];
 }
 
+- (void)testBasics {
+  NSString *bundlePath = testBundle.resourceURL.path;
+  Script *script = [[Script alloc] initWithPath:bundlePath];
+  [script importModule:@"basics"];
+}
+
 @end
