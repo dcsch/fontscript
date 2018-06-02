@@ -40,9 +40,24 @@
 }
 
 - (void)testBasics {
-  NSString *bundlePath = testBundle.resourceURL.path;
-  Script *script = [[Script alloc] initWithPath:bundlePath];
+  Script *script = [[Script alloc] initWithPath:testBundle.resourceURL.path];
   [script importModule:@"basics"];
+}
+
+- (void)testNewFont {
+  Script *script = [[Script alloc] initWithPath:testBundle.resourceURL.path];
+  [script importModule:@"new_font"];
+
+  NSArray *fonts = script.fonts;
+  XCTAssertEqual(fonts.count, 1);
+}
+
+- (void)testAccessFontsAlreadyLoaded {
+  Script *script = [[Script alloc] initWithPath:testBundle.resourceURL.path];
+
+  [script newFontWithFamilyName:@"Test Family" styleName:@"Test Style" showInterface:NO];
+
+  [script importModule:@"list_fonts"];
 }
 
 @end

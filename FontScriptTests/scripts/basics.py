@@ -12,3 +12,10 @@ print(font.path)
 
 layer = font.newLayer("My Layer 1")
 print(layer)
+
+#layer.foo = "an arbitrary string"
+#print(layer.foo)
+
+fonts = fontParts.AllFonts()
+for f in fonts:
+    print("Font at: ", f.path)

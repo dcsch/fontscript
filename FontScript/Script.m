@@ -121,9 +121,20 @@ static PyObject *fontParts_world_AllFonts(PyObject *self, PyObject *args, PyObje
   if (!PyArg_ParseTupleAndKeywords(args, keywds, "|O", kwlist, &sortOptions))
     return NULL;
 
-  
+  PyObject *list = PyList_New(0);
 
-  return PyLong_FromLong(0);
+  for (Font *font in script.fonts) {
+    if (font.pyObject == NULL) {
+      // We neet to connect-up a peer
+      FontObject *fontObject = (FontObject *)FontType.tp_alloc(&FontType, 0);
+      if (!fontObject)
+        return NULL;
+      fontObject->font = font;
+      font.pyObject = fontObject;
+    }
+    PyList_Append(list, (PyObject *)font.pyObject);
+  }
+  return list;
 }
 
 static PyObject *fontParts_world_NewFont(PyObject *self, PyObject *args, PyObject *keywds) {
@@ -141,6 +152,7 @@ static PyObject *fontParts_world_NewFont(PyObject *self, PyObject *args, PyObjec
                                      styleName:[NSString stringWithUTF8String:styleName]
                                  showInterface:showInterface];
     fontObject->font = font;
+    font.pyObject = fontObject;
   }
   return (PyObject *)fontObject;
 }
@@ -159,18 +171,29 @@ static struct PyModuleDef fontPartsModuleDef = {
   .m_methods = fontPartsMethods,
 };
 
+PyObject *FontScriptError;
+
 PyMODINIT_FUNC PyInit_fontParts() {
   PyObject *fontPartsModule = PyModule_Create(&fontPartsModuleDef);
 
   if (PyType_Ready(&FontType) < 0)
     return NULL;
   Py_INCREF(&FontType);
-  PyModule_AddObject(fontPartsModule, "Font", (PyObject *) &FontType);
+  PyModule_AddObject(fontPartsModule, "Font", (PyObject *)&FontType);
+
+  if (PyType_Ready(&InfoType) < 0)
+    return NULL;
+  Py_INCREF(&InfoType);
+  PyModule_AddObject(fontPartsModule, "Info", (PyObject *)&InfoType);
 
   if (PyType_Ready(&LayerType) < 0)
     return NULL;
   Py_INCREF(&LayerType);
-  PyModule_AddObject(fontPartsModule, "Layer", (PyObject *) &LayerType);
+  PyModule_AddObject(fontPartsModule, "Layer", (PyObject *)&LayerType);
+
+  FontScriptError = PyErr_NewException("fontscript.error", NULL, NULL);
+  Py_INCREF(FontScriptError);
+  PyModule_AddObject(fontPartsModule, "error", FontScriptError);
 
   return fontPartsModule;
 }

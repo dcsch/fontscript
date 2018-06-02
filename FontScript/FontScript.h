@@ -16,5 +16,6 @@ FOUNDATION_EXPORT const unsigned char FontScriptVersionString[];
 
 #import <FontScript/Script.h>
 #import <FontScript/Font.h>
+#import <FontScript/Info.h>
 #import <FontScript/Layer.h>
 #import <FontScript/Glyph.h>

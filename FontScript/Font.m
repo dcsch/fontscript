@@ -14,6 +14,7 @@
 @interface Font ()
 {
   NSMutableArray<Layer *> *_layers;
+  FontObject *_pyObject;
 }
 
 @property(readwrite) NSURL *url;
@@ -44,6 +45,19 @@
 
 - (void)dealloc {
   NSLog(@"Font dealloc");
+
+  if (self.pyObject) {
+    self.pyObject->font = nil;
+    self.pyObject = NULL;
+  }
+}
+
+- (FontObject *)pyObject {
+  return _pyObject;
+}
+
+- (void)setPyObject:(FontObject *)pyObject {
+  _pyObject = pyObject;
 }
 
 - (void)saveToURL:(nonnull NSURL *)url showProgress:(BOOL)progress formatVersion:(NSUInteger)version {
@@ -64,7 +78,11 @@ static void Font_dealloc(FontObject *self) {
 
 static PyObject *Font_getpath(FontObject *self, void *closure) {
   Font *font = self->font;
-  NSString *path = font.url.path;
+  if (!font) {
+    PyErr_SetString(FontScriptError, "Peer object has been unloaded");
+    return NULL;
+  }
+  NSString *path = font.url ? font.url.path : @"";
   return PyUnicode_FromString(path.UTF8String);
 }
 
@@ -74,6 +92,12 @@ static PyGetSetDef Font_getsetters[] = {
 };
 
 static PyObject *Font_save(FontObject *self, PyObject *args, PyObject *keywds) {
+  Font *font = self->font;
+  if (!font) {
+    PyErr_SetString(FontScriptError, "Peer object has been unloaded");
+    return NULL;
+  }
+
   const char *path = "";
   int showProgress = 0;
   int formatVersion = 0;
@@ -82,7 +106,6 @@ static PyObject *Font_save(FontObject *self, PyObject *args, PyObject *keywds) {
   if (!PyArg_ParseTupleAndKeywords(args, keywds, "|spi", kwlist, &path, &showProgress, &formatVersion))
     return NULL;
 
-  Font *font = self->font;
   font.url = [NSURL fileURLWithPath:[NSString stringWithUTF8String:path]];
 
   return PyLong_FromLong(0);
@@ -91,9 +114,14 @@ static PyObject *Font_save(FontObject *self, PyObject *args, PyObject *keywds) {
 extern PyTypeObject LayerType;
 
 static PyObject *Font_newLayer(FontObject *self, PyObject *args, PyObject *keywds) {
+  Font *font = self->font;
+  if (!font) {
+    PyErr_SetString(FontScriptError, "Peer object has been unloaded");
+    return NULL;
+  }
+
   LayerObject *layerObject = (LayerObject *)LayerType.tp_alloc(&LayerType, 0);
   if (layerObject) {
-    Font *font = self->font;
     static char *kwlist[] = { "name", "color", NULL };
     const char *name = NULL;
     PyObject *color = NULL;
