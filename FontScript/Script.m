@@ -191,6 +191,11 @@ PyMODINIT_FUNC PyInit_fontParts() {
   Py_INCREF(&LayerType);
   PyModule_AddObject(fontPartsModule, "Layer", (PyObject *)&LayerType);
 
+  if (PyType_Ready(&GlyphType) < 0)
+    return NULL;
+  Py_INCREF(&GlyphType);
+  PyModule_AddObject(fontPartsModule, "Glyph", (PyObject *)&GlyphType);
+
   FontScriptError = PyErr_NewException("fontscript.error", NULL, NULL);
   Py_INCREF(FontScriptError);
   PyModule_AddObject(fontPartsModule, "error", FontScriptError);

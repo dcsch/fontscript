@@ -8,12 +8,17 @@
 
 #import <AppKit/AppKit.h>
 
+@class Glyph;
+
 @interface Layer : NSObject
 
 @property NSString *name;
 @property NSColor *color;
+@property NSMutableDictionary<NSString *, Glyph *> *glyphs;
 
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithName:(nonnull NSString *)name color:(NSColor *)color;
+
+- (Glyph *)newGlyphWithName:(nonnull NSString *)name clear:(BOOL)clear;
 
 @end

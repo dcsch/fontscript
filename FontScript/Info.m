@@ -9,12 +9,55 @@
 #import "Info.h"
 #import "FontScriptPrivate.h"
 
+@interface Info ()
+{
+  InfoObject *_pyObject;
+}
+
+@end
+
 @implementation Info
+
+- (void)dealloc {
+  NSLog(@"Info dealloc");
+
+  if (self.pyObject) {
+    self.pyObject->info = nil;
+    self.pyObject = NULL;
+  }
+}
+
+- (InfoObject *)pyObject {
+  return _pyObject;
+}
+
+- (void)setPyObject:(InfoObject *)pyObject {
+  _pyObject = pyObject;
+}
 
 @end
 
 static void Info_dealloc(InfoObject *self) {
   Py_TYPE(self)->tp_free((PyObject *)self);
+}
+
+static PyObject *Info_getAttr(PyObject *self, PyObject *name) {
+  Info *info = ((InfoObject *)self)->info;
+  if (!info) {
+    PyErr_SetString(FontScriptError, "Peer object has been unloaded");
+    return NULL;
+  }
+
+  NSString *attrName = [NSString stringWithUTF8String:PyUnicode_AsUTF8(name)];
+  PyObject *value = NULL;
+  if ([attrName isEqualToString:@"familyName"]) {
+    value = PyUnicode_FromString(info.familyName.UTF8String);
+  } else if ([attrName isEqualToString:@"styleName"]) {
+    value = PyUnicode_FromString(info.styleName.UTF8String);
+  } else {
+    value = PyObject_GenericGetAttr(self, name);
+  }
+  return value;
 }
 
 PyTypeObject InfoType = {
@@ -23,8 +66,7 @@ PyTypeObject InfoType = {
   .tp_doc = "Info object",
   .tp_basicsize = sizeof(InfoObject),
   .tp_itemsize = 0,
-  .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE,
+  .tp_flags = Py_TPFLAGS_DEFAULT,
   .tp_dealloc = (destructor)Info_dealloc,
-//  .tp_methods = Info_methods,
-//  .tp_getset = Info_getsetters,
+  .tp_getattro = Info_getAttr,
 };

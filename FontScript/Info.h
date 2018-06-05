@@ -10,4 +10,7 @@
 
 @interface Info : NSObject
 
+@property NSString *familyName;
+@property NSString *styleName;
+
 @end

@@ -10,4 +10,10 @@
 
 @interface Glyph : NSObject
 
+@property(nonnull) NSString *name;
+@property(nonnull) NSArray<NSNumber *> *unicodes;
+@property(nullable) NSNumber *unicode;
+
+- (instancetype)initWithName:(nonnull NSString *)name;
+
 @end

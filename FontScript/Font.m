@@ -7,6 +7,7 @@
 //
 
 #import "Font.h"
+#import "Info.h"
 #import "Layer.h"
 #import "FontScriptPrivate.h"
 #include <Python/structmember.h>
@@ -28,6 +29,7 @@
   if (self) {
     NSLog(@"Font init");
 
+    _info = [[Info alloc] init];
     _layers = [[NSMutableArray alloc] init];
   }
   return self;
@@ -38,7 +40,8 @@
                      showInterface:(BOOL)showInterface {
   self = [self init];
   if (self) {
-
+    self.info.familyName = familyName;
+    self.info.styleName = styleName;
   }
   return self;
 }
@@ -86,8 +89,26 @@ static PyObject *Font_getpath(FontObject *self, void *closure) {
   return PyUnicode_FromString(path.UTF8String);
 }
 
+static PyObject *Font_getinfo(FontObject *self, void *closure) {
+  Font *font = self->font;
+  if (!font) {
+    PyErr_SetString(FontScriptError, "Peer object has been unloaded");
+    return NULL;
+  }
+
+  if (!font.info.pyObject) {
+    InfoObject *infoObject = (InfoObject *)InfoType.tp_alloc(&InfoType, 0);
+    if (infoObject) {
+      font.info.pyObject = infoObject;
+      infoObject->info = font.info;
+    }
+  }
+  return (PyObject *)font.info.pyObject;
+}
+
 static PyGetSetDef Font_getsetters[] = {
   { "path", (getter) Font_getpath, NULL, NULL, NULL },
+  { "info", (getter) Font_getinfo, NULL, NULL, NULL },
   { NULL }
 };
 
@@ -129,6 +150,7 @@ static PyObject *Font_newLayer(FontObject *self, PyObject *args, PyObject *keywd
       return NULL;
     Layer *layer = [font newLayerWithName:[NSString stringWithUTF8String:name] color:nil];
     layerObject->layer = layer;
+    layer.pyObject = layerObject;
   }
   return (PyObject *)layerObject;
 }

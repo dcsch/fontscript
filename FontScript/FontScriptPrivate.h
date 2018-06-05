@@ -6,14 +6,8 @@
 //  Copyright © 2018 David Schweinsberg. All rights reserved.
 //
 
-#ifndef FontScriptPrivate_h
-#define FontScriptPrivate_h
-
 #include <FontScript/FontScript.h>
 #include <Python/Python.h>
-
-@class Font;
-@class Layer;
 
 typedef struct {
   PyObject_HEAD
@@ -25,10 +19,15 @@ typedef struct {
   __unsafe_unretained Info *info;
 } InfoObject;
 
-typedef struct _LayerObject {
+typedef struct {
   PyObject_HEAD
   __unsafe_unretained Layer *layer;
 } LayerObject;
+
+typedef struct  {
+  PyObject_HEAD
+  __unsafe_unretained Glyph *glyph;
+} GlyphObject;
 
 @interface Font (PyObject)
 @property FontObject *pyObject;
@@ -38,9 +37,16 @@ typedef struct _LayerObject {
 @property InfoObject *pyObject;
 @end
 
+@interface Layer (PyObject)
+@property LayerObject *pyObject;
+@end
+
+@interface Glyph (PyObject)
+@property GlyphObject *pyObject;
+@end
+
 extern PyTypeObject FontType;
 extern PyTypeObject InfoType;
 extern PyTypeObject LayerType;
+extern PyTypeObject GlyphType;
 extern PyObject *FontScriptError;
-
-#endif /* FontScriptPrivate_h */

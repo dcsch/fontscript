@@ -8,6 +8,7 @@
 
 #import <AppKit/AppKit.h>
 
+@class Info;
 @class Layer;
 
 @interface Font : NSObject
@@ -23,6 +24,9 @@
 
 // File Operations
 - (void)saveToURL:(nonnull NSURL *)url showProgress:(BOOL)progress formatVersion:(NSUInteger)version;
+
+// Sub-Objects
+@property(readonly) Info *info;
 
 // Layers
 - (Layer *)newLayerWithName:(nonnull NSString *)name color:(NSColor *)color;
