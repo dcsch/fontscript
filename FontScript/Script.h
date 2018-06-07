@@ -14,7 +14,9 @@
 
 @property(readonly) NSArray<Font *> *fonts;
 
-- (instancetype)initWithPath:(NSString *)path;
+- (instancetype)initWithPath:(NSString *)path NS_DESIGNATED_INITIALIZER;
+- (instancetype)init __attribute__((unavailable));
+
 - (void)importModule:(NSString *)moduleName;
 - (void)runModule:(NSString *)moduleName function:(NSString *)functionName arguments:(NSArray *)args;
 

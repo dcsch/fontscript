@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		033E956520C8A1C3005AB611 /* new_glyph.py in Resources */ = {isa = PBXBuildFile; fileRef = 033E956420C8A1C3005AB611 /* new_glyph.py */; };
 		0348F58720BA22E700FDC6E2 /* Font.h in Headers */ = {isa = PBXBuildFile; fileRef = 0348F58520BA22E700FDC6E2 /* Font.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0348F58820BA22E700FDC6E2 /* Font.m in Sources */ = {isa = PBXBuildFile; fileRef = 0348F58620BA22E700FDC6E2 /* Font.m */; };
 		0348F58A20BA257200FDC6E2 /* basics.py in Resources */ = {isa = PBXBuildFile; fileRef = 0348F58920BA257200FDC6E2 /* basics.py */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		033E956420C8A1C3005AB611 /* new_glyph.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = new_glyph.py; sourceTree = "<group>"; };
 		0348F58520BA22E700FDC6E2 /* Font.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Font.h; sourceTree = "<group>"; };
 		0348F58620BA22E700FDC6E2 /* Font.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Font.m; sourceTree = "<group>"; };
 		0348F58920BA257200FDC6E2 /* basics.py */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = text.script.python; path = basics.py; sourceTree = "<group>"; tabWidth = 4; };
@@ -148,6 +150,7 @@
 				0348F58920BA257200FDC6E2 /* basics.py */,
 				03879D4D20C1CDA70033A7C4 /* list_fonts.py */,
 				03879D4F20C1D6D20033A7C4 /* new_font.py */,
+				033E956420C8A1C3005AB611 /* new_glyph.py */,
 			);
 			indentWidth = 4;
 			path = scripts;
@@ -259,6 +262,7 @@
 				03879D4E20C1CDA70033A7C4 /* list_fonts.py in Resources */,
 				035AD92320B9044D006494B7 /* multiply.py in Resources */,
 				03879D5020C1D6D20033A7C4 /* new_font.py in Resources */,
+				033E956520C8A1C3005AB611 /* new_glyph.py in Resources */,
 				0348F58A20BA257200FDC6E2 /* basics.py in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

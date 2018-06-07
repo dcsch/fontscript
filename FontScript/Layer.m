@@ -58,7 +58,7 @@
 - (Glyph *)newGlyphWithName:(nonnull NSString *)name clear:(BOOL)clear {
   Glyph *glyph;
   if (![_glyphs.allKeys containsObject:name]) {
-    glyph = [[Glyph alloc] initWithName:name];
+    glyph = [[Glyph alloc] initWithName:name layer:self];
   } else if (clear) {
     [_glyphs removeObjectForKey:name];
   } else {

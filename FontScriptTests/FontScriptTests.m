@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "Script.h"
+#import "FontScript.h"
 
 @interface FontScriptTests : XCTestCase
 {
@@ -58,6 +58,36 @@
   [script newFontWithFamilyName:@"Test Family" styleName:@"Test Style" showInterface:NO];
 
   [script importModule:@"list_fonts"];
+}
+
+- (void)testNewGlyph {
+  Script *script = [[Script alloc] initWithPath:testBundle.resourceURL.path];
+  [script importModule:@"new_glyph"];
+
+  NSArray<Font *> *fonts = script.fonts;
+  XCTAssertEqual(fonts.count, 1);
+
+  NSArray<Layer *> *layers = fonts[0].layers;
+  XCTAssertEqual(layers.count, 1);
+
+  NSDictionary<NSString *, Glyph *> *glyphs = layers[0].glyphs;
+  XCTAssertEqual(glyphs.count, 1);
+}
+
+- (void)testGlyphNameChange {
+  Script *script = [[Script alloc] initWithPath:testBundle.resourceURL.path];
+  [script importModule:@"new_glyph"];
+  NSDictionary<NSString *, Glyph *> *glyphs = script.fonts[0].layers[0].glyphs;
+  Glyph *glyph = glyphs[@"A"];
+  XCTAssertNotNil(glyph);
+  XCTAssertTrue([glyph.name isEqualToString:@"A"]);
+
+  glyph.name = @"B";
+  Glyph *glyphB = glyphs[@"B"];
+  XCTAssertEqual(glyph, glyphB);
+
+  [script.fonts[0].layers[0] newGlyphWithName:@"C" clear:NO];
+  glyph.name = @"C";
 }
 
 @end

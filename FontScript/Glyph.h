@@ -8,12 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+@class Layer;
+
 @interface Glyph : NSObject
 
+@property(weak) Layer *layer;
 @property(nonnull) NSString *name;
 @property(nonnull) NSArray<NSNumber *> *unicodes;
 @property(nullable) NSNumber *unicode;
 
-- (instancetype)initWithName:(nonnull NSString *)name;
+- (instancetype)initWithName:(nonnull NSString *)name layer:(Layer *)layer NS_DESIGNATED_INITIALIZER;
+- (instancetype)init __attribute__((unavailable));
 
 @end
