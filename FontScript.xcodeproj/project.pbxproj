@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		033E956520C8A1C3005AB611 /* new_glyph.py in Resources */ = {isa = PBXBuildFile; fileRef = 033E956420C8A1C3005AB611 /* new_glyph.py */; };
+		033E956720C9BE31005AB611 /* rename_glyph.py in Resources */ = {isa = PBXBuildFile; fileRef = 033E956620C9BE31005AB611 /* rename_glyph.py */; };
 		0348F58720BA22E700FDC6E2 /* Font.h in Headers */ = {isa = PBXBuildFile; fileRef = 0348F58520BA22E700FDC6E2 /* Font.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0348F58820BA22E700FDC6E2 /* Font.m in Sources */ = {isa = PBXBuildFile; fileRef = 0348F58620BA22E700FDC6E2 /* Font.m */; };
 		0348F58A20BA257200FDC6E2 /* basics.py in Resources */ = {isa = PBXBuildFile; fileRef = 0348F58920BA257200FDC6E2 /* basics.py */; };
@@ -26,6 +27,8 @@
 		03879D5020C1D6D20033A7C4 /* new_font.py in Resources */ = {isa = PBXBuildFile; fileRef = 03879D4F20C1D6D20033A7C4 /* new_font.py */; };
 		03879D5320C1DD5D0033A7C4 /* Info.h in Headers */ = {isa = PBXBuildFile; fileRef = 03879D5120C1DD5D0033A7C4 /* Info.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		03879D5420C1DD5D0033A7C4 /* Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 03879D5220C1DD5D0033A7C4 /* Info.m */; };
+		03B1077F20C9FCCB008C05E3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03B1078120C9FCCB008C05E3 /* Localizable.strings */; };
+		03B1078320CA0693008C05E3 /* FontScript.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B1078220CA0693008C05E3 /* FontScript.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +43,7 @@
 
 /* Begin PBXFileReference section */
 		033E956420C8A1C3005AB611 /* new_glyph.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = new_glyph.py; sourceTree = "<group>"; };
+		033E956620C9BE31005AB611 /* rename_glyph.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = rename_glyph.py; sourceTree = "<group>"; };
 		0348F58520BA22E700FDC6E2 /* Font.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Font.h; sourceTree = "<group>"; };
 		0348F58620BA22E700FDC6E2 /* Font.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Font.m; sourceTree = "<group>"; };
 		0348F58920BA257200FDC6E2 /* basics.py */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = text.script.python; path = basics.py; sourceTree = "<group>"; tabWidth = 4; };
@@ -63,6 +67,8 @@
 		03879D4F20C1D6D20033A7C4 /* new_font.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = new_font.py; sourceTree = "<group>"; };
 		03879D5120C1DD5D0033A7C4 /* Info.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Info.h; sourceTree = "<group>"; };
 		03879D5220C1DD5D0033A7C4 /* Info.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Info.m; sourceTree = "<group>"; };
+		03B1078020C9FCCB008C05E3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		03B1078220CA0693008C05E3 /* FontScript.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FontScript.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				035AD8BB20B8CC97006494B7 /* FontScript.h */,
+				03B1078220CA0693008C05E3 /* FontScript.m */,
 				0383B14F20BF4A8900848F70 /* FontScriptPrivate.h */,
 				035AD8BC20B8CC97006494B7 /* Info.plist */,
 				035AD8D220B8CD68006494B7 /* Script.h */,
@@ -121,6 +128,7 @@
 				0348F59020BCCD1F00FDC6E2 /* Glyph.m */,
 				03879D5120C1DD5D0033A7C4 /* Info.h */,
 				03879D5220C1DD5D0033A7C4 /* Info.m */,
+				03B1078120C9FCCB008C05E3 /* Localizable.strings */,
 			);
 			path = FontScript;
 			sourceTree = "<group>";
@@ -151,6 +159,7 @@
 				03879D4D20C1CDA70033A7C4 /* list_fonts.py */,
 				03879D4F20C1D6D20033A7C4 /* new_font.py */,
 				033E956420C8A1C3005AB611 /* new_glyph.py */,
+				033E956620C9BE31005AB611 /* rename_glyph.py */,
 			);
 			indentWidth = 4;
 			path = scripts;
@@ -252,6 +261,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03B1077F20C9FCCB008C05E3 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,6 +272,7 @@
 				03879D4E20C1CDA70033A7C4 /* list_fonts.py in Resources */,
 				035AD92320B9044D006494B7 /* multiply.py in Resources */,
 				03879D5020C1D6D20033A7C4 /* new_font.py in Resources */,
+				033E956720C9BE31005AB611 /* rename_glyph.py in Resources */,
 				033E956520C8A1C3005AB611 /* new_glyph.py in Resources */,
 				0348F58A20BA257200FDC6E2 /* basics.py in Resources */,
 			);
@@ -277,6 +288,7 @@
 				03879D5420C1DD5D0033A7C4 /* Info.m in Sources */,
 				0348F58E20BCCD0600FDC6E2 /* Layer.m in Sources */,
 				0348F58820BA22E700FDC6E2 /* Font.m in Sources */,
+				03B1078320CA0693008C05E3 /* FontScript.m in Sources */,
 				0348F59220BCCD1F00FDC6E2 /* Glyph.m in Sources */,
 				035AD8D520B8CD68006494B7 /* Script.m in Sources */,
 			);
@@ -299,6 +311,17 @@
 			targetProxy = 035AD8C320B8CC97006494B7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		03B1078120C9FCCB008C05E3 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				03B1078020C9FCCB008C05E3 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		035AD8CA20B8CC97006494B7 /* Debug */ = {

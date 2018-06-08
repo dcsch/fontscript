@@ -19,13 +19,7 @@
 
 - (void)setUp {
   [super setUp];
-
-  NSUInteger i = [NSBundle.allBundles indexOfObjectPassingTest:^BOOL(NSBundle * _Nonnull obj,
-                                                                     NSUInteger idx,
-                                                                     BOOL * _Nonnull stop) {
-    return [obj.bundleIdentifier isEqualToString:@"com.typista.FontScriptTests"];
-  }];
-  testBundle = NSBundle.allBundles[i];
+  testBundle = [NSBundle bundleWithIdentifier:@"com.typista.FontScriptTests"];
 }
 
 - (void)tearDown {
@@ -82,12 +76,23 @@
   XCTAssertNotNil(glyph);
   XCTAssertTrue([glyph.name isEqualToString:@"A"]);
 
-  glyph.name = @"B";
+  NSError *error = nil;
+  [glyph rename:@"B" error:&error];
+  XCTAssertNil(error);
+
   Glyph *glyphB = glyphs[@"B"];
   XCTAssertEqual(glyph, glyphB);
 
   [script.fonts[0].layers[0] newGlyphWithName:@"C" clear:NO];
-  glyph.name = @"C";
+  [glyph rename:@"C" error:&error];
+  XCTAssertNotNil(error);
+  XCTAssertTrue([error.domain isEqualToString:FontScriptErrorDomain]);
+  XCTAssertEqual(error.code, FontScriptErrorGlyphNameInUse);
+}
+
+- (void)testScriptedGlyphNameChange {
+  Script *script = [[Script alloc] initWithPath:testBundle.resourceURL.path];
+  [script importModule:@"rename_glyph"];
 }
 
 @end

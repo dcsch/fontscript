@@ -24,7 +24,7 @@
 - (instancetype)initWithName:(nonnull NSString *)name layer:(Layer *)layer {
   self = [super init];
   if (self) {
-    self.name = name;
+    _name = name;
     self.layer = layer;
     self.unicodes = [NSArray array];
   }
@@ -52,24 +52,33 @@
   return _name;
 }
 
-- (void)setName:(nonnull NSString *)name {
+- (BOOL)rename:(nonnull NSString *)name error:(NSError **)error {
   if ([_name isEqualToString:name]) {
-    return;
+    return YES;
   }
 
   if (_layer) {
 
     // Check that the name doesn't already exist
     if ([_layer.glyphs.allKeys containsObject:name]) {
-      return;
+      if (error) {
+        NSString *desc = [NSString stringWithFormat:
+                          LocalizedString(@"A glyph with the name '%@' already exists"),
+                          name];
+        NSDictionary *dict = @{ NSLocalizedDescriptionKey : desc };
+        *error = [NSError errorWithDomain:FontScriptErrorDomain
+                                     code:FontScriptErrorGlyphNameInUse
+                                 userInfo:dict];
+      }
+      return NO;
     }
 
     // Relocate the glyph in the dictionary
     [_layer.glyphs removeObjectForKey:_name];
     _layer.glyphs[name] = self;
   }
-
   _name = name;
+  return YES;
 }
 
 - (nullable NSNumber *)unicode {
@@ -89,10 +98,56 @@
   self.unicodes = copy;
 }
 
+- (CGFloat)leftMargin {
+  return CGRectGetMinX(self.bounds);
+}
+
+- (void)setLeftMargin:(CGFloat)leftMargin {
+  CGFloat delta = leftMargin - self.leftMargin;
+  [self moveBy:CGPointMake(delta, 0)];
+  self.width += delta;
+}
+
+- (CGFloat)rightMargin {
+  return self.width - CGRectGetMaxX(self.bounds);
+}
+
+- (void)setRightMargin:(CGFloat)rightMargin {
+  self.width = CGRectGetMaxX(self.bounds) + rightMargin;
+}
+
+- (CGRect)bounds {
+  return CGRectZero;
+}
+
+- (void)moveBy:(CGPoint)point {
+}
+
 @end
 
 static void Glyph_dealloc(GlyphObject *self) {
   Py_TYPE(self)->tp_free((PyObject *)self);
+}
+
+static PyObject *Glyph_getName(GlyphObject *self, void *closure) {
+  Glyph *glyph = self->glyph;
+  return PyUnicode_FromString(glyph.name.UTF8String);
+}
+
+static int Glyph_setName(GlyphObject *self, PyObject *value, void *closure) {
+  if (value == NULL || !PyUnicode_Check(value)) {
+    PyErr_SetString(PyExc_TypeError,
+                    "The name attribute value must be a string");
+    return -1;
+  }
+  Glyph *glyph = self->glyph;
+  NSError *error = nil;
+  [glyph rename:[NSString stringWithUTF8String:PyUnicode_AsUTF8(value)] error:&error];
+  if (error) {
+    PyErr_SetString(PyExc_ValueError, error.localizedDescription.UTF8String);
+    return -1;
+  }
+  return 0;
 }
 
 static PyObject *Glyph_getUnicodes(GlyphObject *self, void *closure) {
@@ -144,9 +199,61 @@ static int Glyph_setUnicode(GlyphObject *self, PyObject *value, void *closure) {
   return 0;
 }
 
+static PyObject *Glyph_getWidth(GlyphObject *self, void *closure) {
+  Glyph *glyph = self->glyph;
+  return PyFloat_FromDouble(glyph.width);
+}
+
+static int Glyph_setWidth(GlyphObject *self, PyObject *value, void *closure) {
+  if (value == NULL || !(PyLong_Check(value) || PyFloat_Check(value))) {
+    PyErr_SetString(PyExc_TypeError,
+                    "The width attribute value must be an integer or float");
+    return -1;
+  }
+  Glyph *glyph = self->glyph;
+  glyph.width = PyFloat_AsDouble(value);
+  return 0;
+}
+
+static PyObject *Glyph_getLeftMargin(GlyphObject *self, void *closure) {
+  Glyph *glyph = self->glyph;
+  return PyFloat_FromDouble(glyph.leftMargin);
+}
+
+static int Glyph_setLeftMargin(GlyphObject *self, PyObject *value, void *closure) {
+  if (value == NULL || !(PyLong_Check(value) || PyFloat_Check(value))) {
+    PyErr_SetString(PyExc_TypeError,
+                    "The leftMargin attribute value must be an integer or float");
+    return -1;
+  }
+  Glyph *glyph = self->glyph;
+  glyph.leftMargin = PyFloat_AsDouble(value);
+  return 0;
+}
+
+static PyObject *Glyph_getRightMargin(GlyphObject *self, void *closure) {
+  Glyph *glyph = self->glyph;
+  return PyFloat_FromDouble(glyph.rightMargin);
+}
+
+static int Glyph_setRightMargin(GlyphObject *self, PyObject *value, void *closure) {
+  if (value == NULL || !(PyLong_Check(value) || PyFloat_Check(value))) {
+    PyErr_SetString(PyExc_TypeError,
+                    "The rightMargin attribute value must be an integer or float");
+    return -1;
+  }
+  Glyph *glyph = self->glyph;
+  glyph.rightMargin = PyFloat_AsDouble(value);
+  return 0;
+}
+
 static PyGetSetDef Glyph_getsetters[] = {
+  { "name", (getter)Glyph_getName, (setter)Glyph_setName, NULL, NULL },
   { "unicodes", (getter)Glyph_getUnicodes, (setter)Glyph_setUnicodes, NULL, NULL },
   { "unicode", (getter)Glyph_getUnicode, (setter)Glyph_setUnicode, NULL, NULL },
+  { "width", (getter)Glyph_getWidth, (setter)Glyph_setWidth, NULL, NULL },
+  { "leftMargin", (getter)Glyph_getLeftMargin, (setter)Glyph_setLeftMargin, NULL, NULL },
+  { "rightMargin", (getter)Glyph_getRightMargin, (setter)Glyph_setRightMargin, NULL, NULL },
   { NULL }
 };
 

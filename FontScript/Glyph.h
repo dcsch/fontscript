@@ -12,12 +12,30 @@
 
 @interface Glyph : NSObject
 
+- (instancetype)initWithName:(nonnull NSString *)name layer:(Layer *)layer NS_DESIGNATED_INITIALIZER;
+- (instancetype)init __attribute__((unavailable));
+
+// Parents
 @property(weak) Layer *layer;
-@property(nonnull) NSString *name;
+
+// Identification
+@property(nonnull, readonly) NSString *name;
+- (BOOL)rename:(nonnull NSString *)name error:(NSError **)error;
 @property(nonnull) NSArray<NSNumber *> *unicodes;
 @property(nullable) NSNumber *unicode;
 
-- (instancetype)initWithName:(nonnull NSString *)name layer:(Layer *)layer NS_DESIGNATED_INITIALIZER;
-- (instancetype)init __attribute__((unavailable));
+// Metrics
+@property CGFloat width;
+@property CGFloat leftMargin;
+@property CGFloat rightMargin;
+@property CGFloat height;
+@property CGFloat bottomMargin;
+@property CGFloat topMargin;
+
+// Queries
+@property(readonly) CGRect bounds;
+
+// Transformations
+- (void)moveBy:(CGPoint)point;
 
 @end

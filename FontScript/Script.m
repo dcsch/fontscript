@@ -10,6 +10,8 @@
 #import "FontScriptPrivate.h"
 #import "Font.h"
 
+NSErrorDomain const FontScriptErrorDomain = @"FontScriptErrorDomain";
+
 @interface Script ()
 {
   NSMutableArray<Font *> *_fonts;

@@ -16,6 +16,8 @@ layer = font.newLayer("My Layer 1")
 print(layer)
 
 glyph = layer.newGlyph("A")
+glyph.width = 123
+glyph.width = 123.456
 
 fonts = fontParts.AllFonts()
 for f in fonts:
