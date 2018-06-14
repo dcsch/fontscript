@@ -1,2 +1,9 @@
+import unittest
 import fontParts
-font1 = fontParts.NewFont()
+
+class TestFont(unittest.TestCase):
+
+    def test_NewFont(self):
+        self.assertIsNotNine(fontParts.NewFont())
+
+unittest.main(module=None, argv=['foo', 'bar'], exit=False)

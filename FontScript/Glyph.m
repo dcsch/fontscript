@@ -8,6 +8,7 @@
 
 #import "Glyph.h"
 #import "FontScriptPrivate.h"
+#import "BoundsPen.h"
 #include <Python/structmember.h>
 
 @interface Glyph ()
@@ -117,10 +118,22 @@
 }
 
 - (CGRect)bounds {
-  return CGRectZero;
+  BoundsPen *pen = [[BoundsPen alloc] init];
+  [self drawWithPen:pen];
+  return pen.bounds;
 }
 
 - (void)moveBy:(CGPoint)point {
+}
+
+- (void)drawWithPen:(NSObject<AbstractPen> *)pen {
+
+  // TESTING
+  [pen moveToPoint:CGPointMake(100, 100)];
+  [pen lineToPoint:CGPointMake(100, -100)];
+  [pen lineToPoint:CGPointMake(-100, -100)];
+  [pen lineToPoint:CGPointMake(-100, 100)];
+  [pen closePath];
 }
 
 @end

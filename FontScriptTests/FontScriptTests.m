@@ -42,8 +42,8 @@
   Script *script = [[Script alloc] initWithPath:testBundle.resourceURL.path];
   [script importModule:@"new_font"];
 
-  NSArray *fonts = script.fonts;
-  XCTAssertEqual(fonts.count, 1);
+//  NSArray *fonts = script.fonts;
+//  XCTAssertEqual(fonts.count, 1);
 }
 
 - (void)testAccessFontsAlreadyLoaded {
@@ -93,6 +93,21 @@
 - (void)testScriptedGlyphNameChange {
   Script *script = [[Script alloc] initWithPath:testBundle.resourceURL.path];
   [script importModule:@"rename_glyph"];
+}
+
+- (void)testGlyphBounds {
+  Script *script = [[Script alloc] initWithPath:testBundle.resourceURL.path];
+  Font *font = [script newFontWithFamilyName:@"Test Family"
+                                   styleName:@"Test Style"
+                               showInterface:NO];
+  Layer *layer = [font newLayerWithName:@"Test Layer" color:nil];
+  Glyph *glyph = [layer newGlyphWithName:@"A" clear:NO];
+
+  CGRect bounds = glyph.bounds;
+  XCTAssertEqual(CGRectGetMinX(bounds), -100);
+  XCTAssertEqual(CGRectGetMinY(bounds), -100);
+  XCTAssertEqual(CGRectGetMaxX(bounds), 100);
+  XCTAssertEqual(CGRectGetMaxY(bounds), 100);
 }
 
 @end
