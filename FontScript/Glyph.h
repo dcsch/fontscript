@@ -9,10 +9,12 @@
 #import <Foundation/Foundation.h>
 
 @class Layer;
+@class Contour;
+@protocol AbstractPen;
 
-@interface Glyph : NSObject
+@interface Glyph : NSObject <NSCopying>
 
-- (instancetype)initWithName:(nonnull NSString *)name layer:(Layer *)layer NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithName:(nonnull NSString *)name layer:(nullable Layer *)layer NS_DESIGNATED_INITIALIZER;
 - (instancetype)init __attribute__((unavailable));
 
 // Parents
@@ -35,7 +37,36 @@
 // Queries
 @property(readonly) CGRect bounds;
 
+// Pens and Drawing
+- (void)drawWithPen:(NSObject<AbstractPen> *)pen;
+
+// Layers
+
+// Global
+
+// Contours
+@property(nonnull, readonly) NSArray<Contour *> *contours;
+- (Contour *)appendContour:(Contour *)contour offset:(CGPoint)offset;
+
+// Components
+
+// Anchors
+
+// Guidelines
+
+// Image
+
+// Note
+
+// Sub-Objects
+
 // Transformations
 - (void)moveBy:(CGPoint)point;
+
+// Interpolation
+
+// Normalization
+
+// Environment
 
 @end

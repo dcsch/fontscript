@@ -15,6 +15,7 @@
 {
   NSString *_name;
   NSArray<NSNumber *> *_unicodes;
+  NSMutableArray<Contour *> *_contours;
   GlyphObject *_pyObject;
 }
 
@@ -22,14 +23,22 @@
 
 @implementation Glyph
 
-- (instancetype)initWithName:(nonnull NSString *)name layer:(Layer *)layer {
+- (instancetype)initWithName:(nonnull NSString *)name layer:(nullable Layer *)layer {
   self = [super init];
   if (self) {
     _name = name;
     self.layer = layer;
     self.unicodes = [NSArray array];
+    _contours = [NSMutableArray array];
   }
   return self;
+}
+
+- (nonnull id)copyWithZone:(nullable NSZone *)zone {
+  Glyph *glyph = [[Glyph allocWithZone:zone] initWithName:self.name layer:nil];
+  glyph.unicodes = [self.unicodes copyWithZone:zone];
+  glyph->_contours = [self.contours copyWithZone:zone];
+  return glyph;
 }
 
 - (void)dealloc {
@@ -123,17 +132,22 @@
   return pen.bounds;
 }
 
+- (nonnull Contour *)appendContour:(nonnull Contour *)contour offset:(CGPoint)offset {
+  Contour *copy = [contour copy];
+  if (!CGPointEqualToPoint(offset, CGPointZero)) {
+    [copy moveBy:offset];
+  }
+  [_contours addObject:copy];
+  return copy;
+}
+
 - (void)moveBy:(CGPoint)point {
 }
 
 - (void)drawWithPen:(NSObject<AbstractPen> *)pen {
-
-  // TESTING
-  [pen moveToPoint:CGPointMake(100, 100)];
-  [pen lineToPoint:CGPointMake(100, -100)];
-  [pen lineToPoint:CGPointMake(-100, -100)];
-  [pen lineToPoint:CGPointMake(-100, 100)];
-  [pen closePath];
+  for (Contour *contour in self.contours) {
+    [contour drawWithPen:pen];
+  }
 }
 
 @end

@@ -29,3 +29,4 @@ NS_ERROR_ENUM(FontScriptErrorDomain)
 #import <FontScript/Info.h>
 #import <FontScript/Layer.h>
 #import <FontScript/Glyph.h>
+#import <FontScript/Contour.h>

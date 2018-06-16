@@ -23,8 +23,8 @@
 }
 
 - (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
+  // Put teardown code here. This method is called after the invocation of each test method in the class.
+  [super tearDown];
 }
 
 - (void)testExample {
@@ -102,6 +102,8 @@
                                showInterface:NO];
   Layer *layer = [font newLayerWithName:@"Test Layer" color:nil];
   Glyph *glyph = [layer newGlyphWithName:@"A" clear:NO];
+  Contour *contour = [[Contour alloc] init];
+  [glyph appendContour:contour offset:CGPointZero];
 
   CGRect bounds = glyph.bounds;
   XCTAssertEqual(CGRectGetMinX(bounds), -100);
