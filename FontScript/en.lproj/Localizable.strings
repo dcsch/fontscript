@@ -7,3 +7,6 @@
 */
 
 "A glyph with the name '%@' already exists" = "A glyph with the name '%@' already exists";
+"Contour not located in Glyph" = "Contour not located in Glyph";
+"No contour located at index %u" = "No contour located at index %u";
+"Index %u is out-of-range" = "Index %u is out-of-range";

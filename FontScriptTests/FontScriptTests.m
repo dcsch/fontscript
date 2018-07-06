@@ -77,14 +77,14 @@
   XCTAssertTrue([glyph.name isEqualToString:@"A"]);
 
   NSError *error = nil;
-  [glyph rename:@"B" error:&error];
+  [glyph setName:@"B" error:&error];
   XCTAssertNil(error);
 
   Glyph *glyphB = glyphs[@"B"];
   XCTAssertEqual(glyph, glyphB);
 
   [script.fonts[0].layers[0] newGlyphWithName:@"C" clear:NO];
-  [glyph rename:@"C" error:&error];
+  [glyph setName:@"C" error:&error];
   XCTAssertNotNil(error);
   XCTAssertTrue([error.domain isEqualToString:FontScriptErrorDomain]);
   XCTAssertEqual(error.code, FontScriptErrorGlyphNameInUse);
@@ -102,7 +102,7 @@
                                showInterface:NO];
   Layer *layer = [font newLayerWithName:@"Test Layer" color:nil];
   Glyph *glyph = [layer newGlyphWithName:@"A" clear:NO];
-  Contour *contour = [[Contour alloc] init];
+  Contour *contour = [[Contour alloc] initWithGlyph:nil];
   [glyph appendContour:contour offset:CGPointZero];
 
   CGRect bounds = glyph.bounds;
@@ -110,6 +110,17 @@
   XCTAssertEqual(CGRectGetMinY(bounds), -100);
   XCTAssertEqual(CGRectGetMaxX(bounds), 100);
   XCTAssertEqual(CGRectGetMaxY(bounds), 100);
+}
+
+- (void)testRandomIdentifier {
+  NSMutableArray<NSString *> *existing = [NSMutableArray array];
+  NSError *error = nil;
+  for (NSUInteger i = 0; i < 1000; ++i) {
+    NSString *identifier = RandomIdentifier(existing, &error);
+    XCTAssertNotNil(identifier);
+    XCTAssertNil(error);
+    [existing addObject:identifier];
+  }
 }
 
 @end

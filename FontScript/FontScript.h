@@ -18,10 +18,15 @@ FOUNDATION_EXPORT NSErrorDomain const FontScriptErrorDomain;
 
 NSString *LocalizedString(NSString *string);
 
+NSString *RandomIdentifier(NSArray<NSString *> *existing, NSError **error);
+
 NS_ERROR_ENUM(FontScriptErrorDomain)
 {
   FontScriptErrorUnknown = -1,
   FontScriptErrorGlyphNameInUse = -999,
+  FontScriptErrorContourNotLocated = -1000,
+  FontScriptErrorIndexOutOfRange = -1001,
+  FontScriptErrorIdentifierNotUnique = -1002
 };
 
 #import <FontScript/Script.h>

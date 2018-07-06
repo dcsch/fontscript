@@ -62,7 +62,11 @@
   return _name;
 }
 
-- (BOOL)rename:(nonnull NSString *)name error:(NSError **)error {
+- (void)setName:(nonnull NSString *)name {
+  [self setName:name error:nil];
+}
+
+- (BOOL)setName:(nonnull NSString *)name error:(NSError **)error {
   if ([_name isEqualToString:name]) {
     return YES;
   }
@@ -138,7 +142,75 @@
     [copy moveBy:offset];
   }
   [_contours addObject:copy];
+  copy.glyph = self;
   return copy;
+}
+
+- (BOOL)removeContour:(nonnull Contour *)contour error:(NSError **)error {
+  NSUInteger index = [_contours indexOfObject:contour];
+  if (index == NSNotFound) {
+    if (error) {
+      NSString *desc = [NSString stringWithFormat:
+                        LocalizedString(@"Contour not located in Glyph"),
+                        index];
+      NSDictionary *dict = @{ NSLocalizedDescriptionKey : desc };
+      *error = [NSError errorWithDomain:FontScriptErrorDomain
+                                   code:FontScriptErrorContourNotLocated
+                               userInfo:dict];
+    }
+    return NO;
+  }
+  [self removeContourAtIndex:index error:error];
+  return YES;
+}
+
+- (BOOL)removeContourAtIndex:(NSUInteger)index error:(NSError **)error {
+  if (index < _contours.count) {
+    Contour *contour = [_contours objectAtIndex:index];
+    contour.glyph = nil;
+    [_contours removeObjectAtIndex:index];
+  } else {
+    if (error) {
+      NSString *desc = [NSString stringWithFormat:
+                        LocalizedString(@"No contour located at index %u"),
+                        index];
+      NSDictionary *dict = @{ NSLocalizedDescriptionKey : desc };
+      *error = [NSError errorWithDomain:FontScriptErrorDomain
+                                   code:FontScriptErrorContourNotLocated
+                               userInfo:dict];
+    }
+    return NO;
+  }
+  return YES;
+}
+
+- (void)clearContours {
+  for (Contour *contour in _contours) {
+    contour.glyph = nil;
+  }
+  [_contours removeAllObjects];
+}
+
+- (BOOL)reorderContour:(nonnull Contour *)contour toIndex:(NSUInteger)index error:(NSError **)error {
+  if (index >= _contours.count) {
+    if (error) {
+      NSString *desc = [NSString stringWithFormat:
+                        LocalizedString(@"Index %u is out-of-range"),
+                        index];
+      NSDictionary *dict = @{ NSLocalizedDescriptionKey : desc };
+      *error = [NSError errorWithDomain:FontScriptErrorDomain
+                                   code:FontScriptErrorIndexOutOfRange
+                               userInfo:dict];
+    }
+    return NO;
+  }
+  [self removeContour:contour error:error];
+  if (error && *error) {
+    return NO;
+  }
+  [_contours insertObject:contour atIndex:index];
+  contour.glyph = self;
+  return YES;
 }
 
 - (void)moveBy:(CGPoint)point {
@@ -169,7 +241,7 @@ static int Glyph_setName(GlyphObject *self, PyObject *value, void *closure) {
   }
   Glyph *glyph = self->glyph;
   NSError *error = nil;
-  [glyph rename:[NSString stringWithUTF8String:PyUnicode_AsUTF8(value)] error:&error];
+  [glyph setName:[NSString stringWithUTF8String:PyUnicode_AsUTF8(value)] error:&error];
   if (error) {
     PyErr_SetString(PyExc_ValueError, error.localizedDescription.UTF8String);
     return -1;

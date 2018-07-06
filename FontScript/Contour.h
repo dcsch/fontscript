@@ -8,13 +8,23 @@
 
 #import <Foundation/Foundation.h>
 
+@class Glyph;
+@class Layer;
+@class Font;
 @protocol AbstractPen;
 
 @interface Contour : NSObject <NSCopying>
 
+- (instancetype)initWithGlyph:(nullable Glyph *)glyph NS_DESIGNATED_INITIALIZER;
+- (instancetype)init __attribute__((unavailable));
+
 // Parents
+@property(weak) Glyph *glyph;
+@property(readonly, weak) Layer *layer;
+@property(readonly, weak) Font *font;
 
 // Identification
+@property NSUInteger index;
 
 // Winding Direction
 

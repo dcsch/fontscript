@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+@class Font;
 @class Layer;
 @class Contour;
 @protocol AbstractPen;
@@ -19,10 +20,11 @@
 
 // Parents
 @property(weak) Layer *layer;
+@property(weak) Font *font;
 
 // Identification
-@property(nonnull, readonly) NSString *name;
-- (BOOL)rename:(nonnull NSString *)name error:(NSError **)error;
+@property(nonnull) NSString *name;
+- (BOOL)setName:(nonnull NSString *)name error:(NSError **)error;
 @property(nonnull) NSArray<NSNumber *> *unicodes;
 @property(nullable) NSNumber *unicode;
 
@@ -46,7 +48,11 @@
 
 // Contours
 @property(nonnull, readonly) NSArray<Contour *> *contours;
-- (Contour *)appendContour:(Contour *)contour offset:(CGPoint)offset;
+- (Contour *)appendContour:(nonnull Contour *)contour offset:(CGPoint)offset;
+- (BOOL)removeContour:(nonnull Contour *)contour error:(NSError **)error;
+- (BOOL)removeContourAtIndex:(NSUInteger)index error:(NSError **)error;
+- (void)clearContours;
+- (BOOL)reorderContour:(nonnull Contour *)contour toIndex:(NSUInteger)index error:(NSError **)error;
 
 // Components
 
