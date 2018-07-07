@@ -1,20 +1,20 @@
 //
-//  Font.m
+//  FSFont.m
 //  FontScript
 //
 //  Created by David Schweinsberg on 5/26/18.
 //  Copyright © 2018 David Schweinsberg. All rights reserved.
 //
 
-#import "Font.h"
-#import "Info.h"
-#import "Layer.h"
+#import "FSFont.h"
+#import "FSInfo.h"
+#import "FSLayer.h"
 #import "FontScriptPrivate.h"
 #include <Python/structmember.h>
 
-@interface Font ()
+@interface FSFont ()
 {
-  NSMutableArray<Layer *> *_layers;
+  NSMutableArray<FSLayer *> *_layers;
   FontObject *_pyObject;
 }
 
@@ -22,22 +22,22 @@
 
 @end
 
-@implementation Font
+@implementation FSFont
 
-- (instancetype)init {
+- (nonnull instancetype)init {
   self = [super init];
   if (self) {
     NSLog(@"Font init");
 
-    _info = [[Info alloc] init];
+    _info = [[FSInfo alloc] init];
     _layers = [[NSMutableArray alloc] init];
   }
   return self;
 }
 
-- (instancetype)initWithFamilyName:(NSString *)familyName
-                         styleName:(NSString *)styleName
-                     showInterface:(BOOL)showInterface {
+- (nonnull instancetype)initWithFamilyName:(NSString *)familyName
+                                 styleName:(NSString *)styleName
+                             showInterface:(BOOL)showInterface {
   self = [self init];
   if (self) {
     self.info.familyName = familyName;
@@ -67,8 +67,8 @@
 
 }
 
-- (Layer *)newLayerWithName:(nonnull NSString *)name color:(NSColor *)color {
-  Layer *layer = [[Layer alloc] initWithName:name color:color];
+- (FSLayer *)newLayerWithName:(nonnull NSString *)name color:(NSColor *)color {
+  FSLayer *layer = [[FSLayer alloc] initWithName:name color:color];
   [_layers addObject:layer];
   return layer;
 }
@@ -80,7 +80,7 @@ static void Font_dealloc(FontObject *self) {
 }
 
 static PyObject *Font_getpath(FontObject *self, void *closure) {
-  Font *font = self->font;
+  FSFont *font = self->font;
   if (!font) {
     PyErr_SetString(FontScriptError, "Peer object has been unloaded");
     return NULL;
@@ -90,7 +90,7 @@ static PyObject *Font_getpath(FontObject *self, void *closure) {
 }
 
 static PyObject *Font_getinfo(FontObject *self, void *closure) {
-  Font *font = self->font;
+  FSFont *font = self->font;
   if (!font) {
     PyErr_SetString(FontScriptError, "Peer object has been unloaded");
     return NULL;
@@ -113,7 +113,7 @@ static PyGetSetDef Font_getsetters[] = {
 };
 
 static PyObject *Font_save(FontObject *self, PyObject *args, PyObject *keywds) {
-  Font *font = self->font;
+  FSFont *font = self->font;
   if (!font) {
     PyErr_SetString(FontScriptError, "Peer object has been unloaded");
     return NULL;
@@ -135,7 +135,7 @@ static PyObject *Font_save(FontObject *self, PyObject *args, PyObject *keywds) {
 extern PyTypeObject LayerType;
 
 static PyObject *Font_newLayer(FontObject *self, PyObject *args, PyObject *keywds) {
-  Font *font = self->font;
+  FSFont *font = self->font;
   if (!font) {
     PyErr_SetString(FontScriptError, "Peer object has been unloaded");
     return NULL;
@@ -148,7 +148,7 @@ static PyObject *Font_newLayer(FontObject *self, PyObject *args, PyObject *keywd
     PyObject *color = NULL;
     if (!PyArg_ParseTupleAndKeywords(args, keywds, "s|O", kwlist, &name, &color))
       return NULL;
-    Layer *layer = [font newLayerWithName:[NSString stringWithUTF8String:name] color:nil];
+    FSLayer *layer = [font newLayerWithName:[NSString stringWithUTF8String:name] color:nil];
     layerObject->layer = layer;
     layer.pyObject = layerObject;
   }

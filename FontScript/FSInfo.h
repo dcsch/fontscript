@@ -1,5 +1,5 @@
 //
-//  Info.h
+//  FSInfo.h
 //  FontScript
 //
 //  Created by David Schweinsberg on 6/1/18.
@@ -8,7 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Info : NSObject
+NS_SWIFT_NAME(Info)
+@interface FSInfo : NSObject
 
 @property NSString *familyName;
 @property NSString *styleName;

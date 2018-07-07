@@ -7,8 +7,8 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "Glyph.h"
-#import "Contour.h"
+#import "FSGlyph.h"
+#import "FSContour.h"
 
 @interface ContourTests : XCTestCase
 
@@ -26,11 +26,18 @@
     [super tearDown];
 }
 
+- (void)testIdentifier {
+  FSContour *contour = [[FSContour alloc] initWithGlyph:nil];
+  NSString *identifier = contour.identifier;
+  XCTAssertNotNil(identifier);
+  XCTAssertEqualObjects(identifier, contour.identifier);
+}
+
 - (void)testIndex {
-  Glyph *glyph = [[Glyph alloc] initWithName:@"A" layer:nil];
-  [glyph appendContour:[[Contour alloc] initWithGlyph:nil] offset:CGPointZero];
+  FSGlyph *glyph = [[FSGlyph alloc] initWithName:@"A" layer:nil];
+  [glyph appendContour:[[FSContour alloc] initWithGlyph:nil] offset:CGPointZero];
   XCTAssertEqual([glyph.contours count], 1);
-  [glyph appendContour:[[Contour alloc] initWithGlyph:nil] offset:CGPointZero];
+  [glyph appendContour:[[FSContour alloc] initWithGlyph:nil] offset:CGPointZero];
   XCTAssertEqual([glyph.contours count], 2);
 
   XCTAssertEqual(glyph.contours[0].index, 0);
@@ -38,17 +45,17 @@
 }
 
 - (void)testSetIndex {
-  Glyph *glyph = [[Glyph alloc] initWithName:@"A" layer:nil];
-  [glyph appendContour:[[Contour alloc] initWithGlyph:nil] offset:CGPointZero];
+  FSGlyph *glyph = [[FSGlyph alloc] initWithName:@"A" layer:nil];
+  [glyph appendContour:[[FSContour alloc] initWithGlyph:nil] offset:CGPointZero];
   XCTAssertEqual([glyph.contours count], 1);
-  [glyph appendContour:[[Contour alloc] initWithGlyph:nil] offset:CGPointZero];
+  [glyph appendContour:[[FSContour alloc] initWithGlyph:nil] offset:CGPointZero];
   XCTAssertEqual([glyph.contours count], 2);
 
   XCTAssertEqual(glyph.contours[0].index, 0);
   XCTAssertEqual(glyph.contours[1].index, 1);
 
-  Contour *contour0 = glyph.contours[0];
-  Contour *contour1 = glyph.contours[1];
+  FSContour *contour0 = glyph.contours[0];
+  FSContour *contour1 = glyph.contours[1];
   glyph.contours[0].index = 1;
 
   XCTAssertEqualObjects(contour0, glyph.contours[1]);

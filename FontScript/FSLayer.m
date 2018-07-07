@@ -1,25 +1,25 @@
 //
-//  Layer.m
+//  FSLayer.m
 //  FontScript
 //
 //  Created by David Schweinsberg on 5/28/18.
 //  Copyright © 2018 David Schweinsberg. All rights reserved.
 //
 
-#import "Layer.h"
+#import "FSLayer.h"
 #import "FontScriptPrivate.h"
 #include <Python/structmember.h>
 
-@interface Layer ()
+@interface FSLayer ()
 {
   LayerObject *_pyObject;
 }
 
 @end
 
-@implementation Layer
+@implementation FSLayer
 
-- (instancetype)init {
+- (nonnull instancetype)init {
   self = [super init];
   if (self) {
     NSLog(@"Layer init");
@@ -29,7 +29,7 @@
   return self;
 }
 
-- (instancetype)initWithName:(nonnull NSString *)name color:(NSColor *)color {
+- (nonnull instancetype)initWithName:(nonnull NSString *)name color:(NSColor *)color {
   self = [self init];
   if (self) {
     self.name = name;
@@ -55,10 +55,10 @@
   _pyObject = pyObject;
 }
 
-- (Glyph *)newGlyphWithName:(nonnull NSString *)name clear:(BOOL)clear {
-  Glyph *glyph;
+- (FSGlyph *)newGlyphWithName:(nonnull NSString *)name clear:(BOOL)clear {
+  FSGlyph *glyph;
   if (![_glyphs.allKeys containsObject:name]) {
-    glyph = [[Glyph alloc] initWithName:name layer:self];
+    glyph = [[FSGlyph alloc] initWithName:name layer:self];
   } else if (clear) {
     [_glyphs removeObjectForKey:name];
   } else {
@@ -75,7 +75,7 @@ static void Layer_dealloc(LayerObject *self) {
 }
 
 static PyObject *Layer_newGlyph(LayerObject *self, PyObject *args, PyObject *keywds) {
-  Layer *layer = self->layer;
+  FSLayer *layer = self->layer;
   if (!layer) {
     PyErr_SetString(FontScriptError, "Peer object has been unloaded");
     return NULL;
@@ -88,7 +88,7 @@ static PyObject *Layer_newGlyph(LayerObject *self, PyObject *args, PyObject *key
     bool clear = true;
     if (!PyArg_ParseTupleAndKeywords(args, keywds, "s|p", kwlist, &name, &clear))
       return NULL;
-    Glyph *glyph = [layer newGlyphWithName:[NSString stringWithUTF8String:name] clear:clear];
+    FSGlyph *glyph = [layer newGlyphWithName:[NSString stringWithUTF8String:name] clear:clear];
     glyphObject->glyph = glyph;
     glyph.pyObject = glyphObject;
   }

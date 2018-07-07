@@ -1,29 +1,29 @@
 //
-//  Glyph.m
+//  FSGlyph.m
 //  FontScript
 //
 //  Created by David Schweinsberg on 5/28/18.
 //  Copyright © 2018 David Schweinsberg. All rights reserved.
 //
 
-#import "Glyph.h"
+#import "FSGlyph.h"
 #import "FontScriptPrivate.h"
-#import "BoundsPen.h"
+#import "FSBoundsPen.h"
 #include <Python/structmember.h>
 
-@interface Glyph ()
+@interface FSGlyph ()
 {
   NSString *_name;
   NSArray<NSNumber *> *_unicodes;
-  NSMutableArray<Contour *> *_contours;
+  NSMutableArray<FSContour *> *_contours;
   GlyphObject *_pyObject;
 }
 
 @end
 
-@implementation Glyph
+@implementation FSGlyph
 
-- (instancetype)initWithName:(nonnull NSString *)name layer:(nullable Layer *)layer {
+- (nonnull instancetype)initWithName:(nonnull NSString *)name layer:(nullable FSLayer *)layer {
   self = [super init];
   if (self) {
     _name = name;
@@ -35,7 +35,7 @@
 }
 
 - (nonnull id)copyWithZone:(nullable NSZone *)zone {
-  Glyph *glyph = [[Glyph allocWithZone:zone] initWithName:self.name layer:nil];
+  FSGlyph *glyph = [[FSGlyph allocWithZone:zone] initWithName:self.name layer:nil];
   glyph.unicodes = [self.unicodes copyWithZone:zone];
   glyph->_contours = [self.contours copyWithZone:zone];
   return glyph;
@@ -131,13 +131,13 @@
 }
 
 - (CGRect)bounds {
-  BoundsPen *pen = [[BoundsPen alloc] init];
+  FSBoundsPen *pen = [[FSBoundsPen alloc] init];
   [self drawWithPen:pen];
   return pen.bounds;
 }
 
-- (nonnull Contour *)appendContour:(nonnull Contour *)contour offset:(CGPoint)offset {
-  Contour *copy = [contour copy];
+- (nonnull FSContour *)appendContour:(nonnull FSContour *)contour offset:(CGPoint)offset {
+  FSContour *copy = [contour copy];
   if (!CGPointEqualToPoint(offset, CGPointZero)) {
     [copy moveBy:offset];
   }
@@ -146,7 +146,7 @@
   return copy;
 }
 
-- (BOOL)removeContour:(nonnull Contour *)contour error:(NSError **)error {
+- (BOOL)removeContour:(nonnull FSContour *)contour error:(NSError **)error {
   NSUInteger index = [_contours indexOfObject:contour];
   if (index == NSNotFound) {
     if (error) {
@@ -166,7 +166,7 @@
 
 - (BOOL)removeContourAtIndex:(NSUInteger)index error:(NSError **)error {
   if (index < _contours.count) {
-    Contour *contour = [_contours objectAtIndex:index];
+    FSContour *contour = [_contours objectAtIndex:index];
     contour.glyph = nil;
     [_contours removeObjectAtIndex:index];
   } else {
@@ -185,13 +185,13 @@
 }
 
 - (void)clearContours {
-  for (Contour *contour in _contours) {
+  for (FSContour *contour in _contours) {
     contour.glyph = nil;
   }
   [_contours removeAllObjects];
 }
 
-- (BOOL)reorderContour:(nonnull Contour *)contour toIndex:(NSUInteger)index error:(NSError **)error {
+- (BOOL)reorderContour:(nonnull FSContour *)contour toIndex:(NSUInteger)index error:(NSError **)error {
   if (index >= _contours.count) {
     if (error) {
       NSString *desc = [NSString stringWithFormat:
@@ -216,8 +216,8 @@
 - (void)moveBy:(CGPoint)point {
 }
 
-- (void)drawWithPen:(NSObject<AbstractPen> *)pen {
-  for (Contour *contour in self.contours) {
+- (void)drawWithPen:(NSObject<FSAbstractPen> *)pen {
+  for (FSContour *contour in self.contours) {
     [contour drawWithPen:pen];
   }
 }
@@ -229,7 +229,7 @@ static void Glyph_dealloc(GlyphObject *self) {
 }
 
 static PyObject *Glyph_getName(GlyphObject *self, void *closure) {
-  Glyph *glyph = self->glyph;
+  FSGlyph *glyph = self->glyph;
   return PyUnicode_FromString(glyph.name.UTF8String);
 }
 
@@ -239,7 +239,7 @@ static int Glyph_setName(GlyphObject *self, PyObject *value, void *closure) {
                     "The name attribute value must be a string");
     return -1;
   }
-  Glyph *glyph = self->glyph;
+  FSGlyph *glyph = self->glyph;
   NSError *error = nil;
   [glyph setName:[NSString stringWithUTF8String:PyUnicode_AsUTF8(value)] error:&error];
   if (error) {
@@ -250,7 +250,7 @@ static int Glyph_setName(GlyphObject *self, PyObject *value, void *closure) {
 }
 
 static PyObject *Glyph_getUnicodes(GlyphObject *self, void *closure) {
-  Glyph *glyph = self->glyph;
+  FSGlyph *glyph = self->glyph;
   PyObject *list = PyList_New(0);
   for (NSNumber *unicode in glyph.unicodes) {
     PyList_Append(list, PyLong_FromLong(unicode.longValue));
@@ -273,13 +273,13 @@ static int Glyph_setUnicodes(GlyphObject *self, PyObject *value, void *closure) 
     }
     [unicodes addObject:[NSNumber numberWithLong:PyLong_AsLong(item)]];
   }
-  Glyph *glyph = self->glyph;
+  FSGlyph *glyph = self->glyph;
   glyph.unicodes = unicodes;
   return 0;
 }
 
 static PyObject *Glyph_getUnicode(GlyphObject *self, void *closure) {
-  Glyph *glyph = self->glyph;
+  FSGlyph *glyph = self->glyph;
   return PyLong_FromLong(glyph.unicode.longValue);
 }
 
@@ -289,7 +289,7 @@ static int Glyph_setUnicode(GlyphObject *self, PyObject *value, void *closure) {
                     "The unicode attribute value must be an integer or None");
     return -1;
   }
-  Glyph *glyph = self->glyph;
+  FSGlyph *glyph = self->glyph;
   if (value == Py_None) {
     glyph.unicodes = [NSArray array];
   } else {
@@ -299,7 +299,7 @@ static int Glyph_setUnicode(GlyphObject *self, PyObject *value, void *closure) {
 }
 
 static PyObject *Glyph_getWidth(GlyphObject *self, void *closure) {
-  Glyph *glyph = self->glyph;
+  FSGlyph *glyph = self->glyph;
   return PyFloat_FromDouble(glyph.width);
 }
 
@@ -309,13 +309,13 @@ static int Glyph_setWidth(GlyphObject *self, PyObject *value, void *closure) {
                     "The width attribute value must be an integer or float");
     return -1;
   }
-  Glyph *glyph = self->glyph;
+  FSGlyph *glyph = self->glyph;
   glyph.width = PyFloat_AsDouble(value);
   return 0;
 }
 
 static PyObject *Glyph_getLeftMargin(GlyphObject *self, void *closure) {
-  Glyph *glyph = self->glyph;
+  FSGlyph *glyph = self->glyph;
   return PyFloat_FromDouble(glyph.leftMargin);
 }
 
@@ -325,13 +325,13 @@ static int Glyph_setLeftMargin(GlyphObject *self, PyObject *value, void *closure
                     "The leftMargin attribute value must be an integer or float");
     return -1;
   }
-  Glyph *glyph = self->glyph;
+  FSGlyph *glyph = self->glyph;
   glyph.leftMargin = PyFloat_AsDouble(value);
   return 0;
 }
 
 static PyObject *Glyph_getRightMargin(GlyphObject *self, void *closure) {
-  Glyph *glyph = self->glyph;
+  FSGlyph *glyph = self->glyph;
   return PyFloat_FromDouble(glyph.rightMargin);
 }
 
@@ -341,7 +341,7 @@ static int Glyph_setRightMargin(GlyphObject *self, PyObject *value, void *closur
                     "The rightMargin attribute value must be an integer or float");
     return -1;
   }
-  Glyph *glyph = self->glyph;
+  FSGlyph *glyph = self->glyph;
   glyph.rightMargin = PyFloat_AsDouble(value);
   return 0;
 }

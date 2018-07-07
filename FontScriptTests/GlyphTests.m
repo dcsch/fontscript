@@ -10,6 +10,9 @@
 #import "FontScript.h"
 
 @interface GlyphTests : XCTestCase
+{
+  NSBundle *testBundle;
+}
 
 @end
 
@@ -17,7 +20,7 @@
 
 - (void)setUp {
   [super setUp];
-  // Put setup code here. This method is called before the invocation of each test method in the class.
+  testBundle = [NSBundle bundleWithIdentifier:@"com.typista.FontScriptTests"];
 }
 
 - (void)tearDown {
@@ -26,14 +29,14 @@
 }
 
 - (void)testCopy {
-  Glyph *glyph1 = [[Glyph alloc] initWithName:@"A" layer:nil];
+  FSGlyph *glyph1 = [[FSGlyph alloc] initWithName:@"A" layer:nil];
   glyph1.unicodes = @[@20U, @30U, @40U];
   glyph1.unicode = @10U;
 
-  Contour *contour = [[Contour alloc] initWithGlyph:nil];
+  FSContour *contour = [[FSContour alloc] initWithGlyph:nil];
   [glyph1 appendContour:contour offset:CGPointZero];
 
-  Glyph *glyph2 = [glyph1 copy];
+  FSGlyph *glyph2 = [glyph1 copy];
   XCTAssertNotEqualObjects(glyph1, glyph2);
   XCTAssertEqualObjects(glyph1.name, glyph2.name);
   XCTAssertEqualObjects(glyph1.unicodes, glyph2.unicodes);
@@ -53,18 +56,18 @@
 }
 
 - (void)testAppendContour {
-  Glyph *glyph = [[Glyph alloc] initWithName:@"A" layer:nil];
+  FSGlyph *glyph = [[FSGlyph alloc] initWithName:@"A" layer:nil];
   XCTAssertEqual([glyph.contours count], 0);
-  Contour *contour = [[Contour alloc] initWithGlyph:nil];
+  FSContour *contour = [[FSContour alloc] initWithGlyph:nil];
   [glyph appendContour:contour offset:CGPointZero];
   XCTAssertEqual([glyph.contours count], 1);
 //  XCTAssertEqualObjects(glyph.contours[0], contour);
 }
 
 - (void)testRemoveContour {
-  Glyph *glyph = [[Glyph alloc] initWithName:@"A" layer:nil];
+  FSGlyph *glyph = [[FSGlyph alloc] initWithName:@"A" layer:nil];
   XCTAssertEqual([glyph.contours count], 0);
-  Contour *contour = [[Contour alloc] initWithGlyph:nil];
+  FSContour *contour = [[FSContour alloc] initWithGlyph:nil];
   [glyph appendContour:contour offset:CGPointZero];
   XCTAssertEqual([glyph.contours count], 1);
 
@@ -76,9 +79,9 @@
 }
 
 - (void)testRemoveContourAtIndex {
-  Glyph *glyph = [[Glyph alloc] initWithName:@"A" layer:nil];
+  FSGlyph *glyph = [[FSGlyph alloc] initWithName:@"A" layer:nil];
   XCTAssertEqual([glyph.contours count], 0);
-  Contour *contour = [[Contour alloc] initWithGlyph:nil];
+  FSContour *contour = [[FSContour alloc] initWithGlyph:nil];
   [glyph appendContour:contour offset:CGPointZero];
   XCTAssertEqual([glyph.contours count], 1);
 
@@ -89,9 +92,9 @@
 }
 
 - (void)testRemoveContourFail {
-  Glyph *glyph = [[Glyph alloc] initWithName:@"A" layer:nil];
+  FSGlyph *glyph = [[FSGlyph alloc] initWithName:@"A" layer:nil];
   XCTAssertEqual([glyph.contours count], 0);
-  Contour *contour = [[Contour alloc] initWithGlyph:nil];
+  FSContour *contour = [[FSContour alloc] initWithGlyph:nil];
   [glyph appendContour:contour offset:CGPointZero];
   XCTAssertEqual([glyph.contours count], 1);
 
@@ -107,7 +110,7 @@
 }
 
 - (void)testRemoveContourAtIndexFail {
-  Glyph *glyph = [[Glyph alloc] initWithName:@"A" layer:nil];
+  FSGlyph *glyph = [[FSGlyph alloc] initWithName:@"A" layer:nil];
   NSError *error = nil;
   XCTAssertFalse([glyph removeContourAtIndex:0 error:&error]);
   XCTAssertNotNil(error);
@@ -117,13 +120,13 @@
 }
 
 - (void)testReorderContour {
-  Glyph *glyph = [[Glyph alloc] initWithName:@"A" layer:nil];
-  [glyph appendContour:[[Contour alloc] initWithGlyph:nil] offset:CGPointZero];
+  FSGlyph *glyph = [[FSGlyph alloc] initWithName:@"A" layer:nil];
+  [glyph appendContour:[[FSContour alloc] initWithGlyph:nil] offset:CGPointZero];
   XCTAssertEqual([glyph.contours count], 1);
-  [glyph appendContour:[[Contour alloc] initWithGlyph:nil] offset:CGPointZero];
+  [glyph appendContour:[[FSContour alloc] initWithGlyph:nil] offset:CGPointZero];
   XCTAssertEqual([glyph.contours count], 2);
 
-  Contour *contour0 = glyph.contours[0];
+  FSContour *contour0 = glyph.contours[0];
   NSError *error = nil;
   XCTAssertTrue([glyph reorderContour:contour0 toIndex:1 error:&error]);
   XCTAssertNil(error);
@@ -131,19 +134,41 @@
 }
 
 - (void)testReorderContourOutOfRange {
-  Glyph *glyph = [[Glyph alloc] initWithName:@"A" layer:nil];
-  [glyph appendContour:[[Contour alloc] initWithGlyph:nil] offset:CGPointZero];
+  FSGlyph *glyph = [[FSGlyph alloc] initWithName:@"A" layer:nil];
+  [glyph appendContour:[[FSContour alloc] initWithGlyph:nil] offset:CGPointZero];
   XCTAssertEqual([glyph.contours count], 1);
-  [glyph appendContour:[[Contour alloc] initWithGlyph:nil] offset:CGPointZero];
+  [glyph appendContour:[[FSContour alloc] initWithGlyph:nil] offset:CGPointZero];
   XCTAssertEqual([glyph.contours count], 2);
 
-  Contour *contour0 = glyph.contours[0];
+  FSContour *contour0 = glyph.contours[0];
   NSError *error = nil;
   XCTAssertFalse([glyph reorderContour:contour0 toIndex:2 error:&error]);
   XCTAssertNotNil(error);
   XCTAssertTrue([error.domain isEqualToString:FontScriptErrorDomain]);
   XCTAssertEqual(error.code, FontScriptErrorIndexOutOfRange);
   XCTAssertEqualObjects(contour0, glyph.contours[0]);
+}
+
+- (void)testGlyphBounds {
+  FSScript *script = [[FSScript alloc] initWithPath:testBundle.resourceURL.path];
+  FSFont *font = [script newFontWithFamilyName:@"Test Family"
+                                     styleName:@"Test Style"
+                                 showInterface:NO];
+  FSLayer *layer = [font newLayerWithName:@"Test Layer" color:nil];
+  FSGlyph *glyph = [layer newGlyphWithName:@"A" clear:NO];
+
+  FSContour *contour = [[FSContour alloc] initWithGlyph:nil];
+  [contour appendPoint:CGPointMake(100, 100) type:FSPointTypeMove smooth:NO];
+  [contour appendPoint:CGPointMake(100, -100) type:FSPointTypeLine smooth:NO];
+  [contour appendPoint:CGPointMake(-100, -100) type:FSPointTypeLine smooth:NO];
+  [contour appendPoint:CGPointMake(-100, 100) type:FSPointTypeLine smooth:NO];
+  [glyph appendContour:contour offset:CGPointZero];
+
+  CGRect bounds = glyph.bounds;
+  XCTAssertEqual(CGRectGetMinX(bounds), -100);
+  XCTAssertEqual(CGRectGetMinY(bounds), -100);
+  XCTAssertEqual(CGRectGetMaxX(bounds), 100);
+  XCTAssertEqual(CGRectGetMaxY(bounds), 100);
 }
 
 @end

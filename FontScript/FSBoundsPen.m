@@ -1,12 +1,12 @@
 //
-//  BoundsPen.m
+//  FSBoundsPen.m
 //  FontScript
 //
 //  Created by David Schweinsberg on 6/8/18.
 //  Copyright © 2018 David Schweinsberg. All rights reserved.
 //
 
-#import "BoundsPen.h"
+#import "FSBoundsPen.h"
 
 static void calcCubicParameters(CGPoint pt1, CGPoint pt2, CGPoint pt3, CGPoint pt4,
                                 CGPoint *a, CGPoint *b, CGPoint *c, CGPoint *d) {
@@ -89,15 +89,15 @@ static void calcCubicPoints(CGPoint pt1,
   }
 }
 
-@interface BoundsPen ()
+@interface FSBoundsPen ()
 
 @property CGPoint currentPoint;
 
 @end
 
-@implementation BoundsPen
+@implementation FSBoundsPen
 
-- (instancetype)init {
+- (nonnull instancetype)init {
   self = [super init];
   if (self) {
     _bounds = CGRectNull;

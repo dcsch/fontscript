@@ -1,5 +1,5 @@
 //
-//  AbstractPen.h
+//  FSAbstractPen.h
 //  FontScript
 //
 //  Created by David Schweinsberg on 6/8/18.
@@ -8,7 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol AbstractPen <NSObject>
+NS_SWIFT_NAME(AbstractPen)
+@protocol FSAbstractPen <NSObject>
 
 - (void)moveToPoint:(CGPoint)point;
 

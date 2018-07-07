@@ -6,9 +6,10 @@
 //  Copyright © 2018 David Schweinsberg. All rights reserved.
 //
 
-#import "AbstractPen.h"
+#import "FSAbstractPen.h"
 
-@interface BoundsPen : NSObject <AbstractPen>
+NS_SWIFT_NAME(BoundsPen)
+@interface FSBoundsPen : NSObject <FSAbstractPen>
 
 @property CGRect bounds;
 

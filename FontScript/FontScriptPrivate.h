@@ -11,37 +11,37 @@
 
 typedef struct {
   PyObject_HEAD
-  __unsafe_unretained Font *font;
+  __unsafe_unretained FSFont *font;
 } FontObject;
 
 typedef struct {
   PyObject_HEAD
-  __unsafe_unretained Info *info;
+  __unsafe_unretained FSInfo *info;
 } InfoObject;
 
 typedef struct {
   PyObject_HEAD
-  __unsafe_unretained Layer *layer;
+  __unsafe_unretained FSLayer *layer;
 } LayerObject;
 
 typedef struct  {
   PyObject_HEAD
-  __unsafe_unretained Glyph *glyph;
+  __unsafe_unretained FSGlyph *glyph;
 } GlyphObject;
 
-@interface Font (PyObject)
+@interface FSFont (PyObject)
 @property FontObject *pyObject;
 @end
 
-@interface Info (PyObject)
+@interface FSInfo (PyObject)
 @property InfoObject *pyObject;
 @end
 
-@interface Layer (PyObject)
+@interface FSLayer (PyObject)
 @property LayerObject *pyObject;
 @end
 
-@interface Glyph (PyObject)
+@interface FSGlyph (PyObject)
 @property GlyphObject *pyObject;
 @end
 

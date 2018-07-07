@@ -1,22 +1,22 @@
 //
-//  Info.m
+//  FSInfo.m
 //  FontScript
 //
 //  Created by David Schweinsberg on 6/1/18.
 //  Copyright © 2018 David Schweinsberg. All rights reserved.
 //
 
-#import "Info.h"
+#import "FSInfo.h"
 #import "FontScriptPrivate.h"
 
-@interface Info ()
+@interface FSInfo ()
 {
   InfoObject *_pyObject;
 }
 
 @end
 
-@implementation Info
+@implementation FSInfo
 
 - (void)dealloc {
   NSLog(@"Info dealloc");
@@ -42,7 +42,7 @@ static void Info_dealloc(InfoObject *self) {
 }
 
 static PyObject *Info_getAttr(PyObject *self, PyObject *name) {
-  Info *info = ((InfoObject *)self)->info;
+  FSInfo *info = ((InfoObject *)self)->info;
   if (!info) {
     PyErr_SetString(FontScriptError, "Peer object has been unloaded");
     return NULL;

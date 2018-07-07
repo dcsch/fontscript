@@ -1,31 +1,31 @@
 //
-//  Script.m
+//  FSScript.m
 //  FontScript
 //
 //  Created by David Schweinsberg on 5/25/18.
 //  Copyright © 2018 David Schweinsberg. All rights reserved.
 //
 
-#import "Script.h"
+#import "FSScript.h"
 #import "FontScriptPrivate.h"
-#import "Font.h"
+#import "FSFont.h"
 
 NSErrorDomain const FontScriptErrorDomain = @"FontScriptErrorDomain";
 
-@interface Script ()
+@interface FSScript ()
 {
-  NSMutableArray<Font *> *_fonts;
+  NSMutableArray<FSFont *> *_fonts;
 }
 
 @end
 
 static PyMODINIT_FUNC PyInit_fontParts(void);
 
-static __weak Script *script;
+static __weak FSScript *script;
 
-@implementation Script
+@implementation FSScript
 
-- (instancetype)initWithPath:(NSString *)path {
+- (nonnull instancetype)initWithPath:(NSString *)path {
   self = [super init];
   if (self) {
     _fonts = [[NSMutableArray alloc] init];
@@ -108,10 +108,10 @@ static __weak Script *script;
   }
 }
 
-- (Font *)newFontWithFamilyName:(NSString *)familyName
-                      styleName:(NSString *)styleName
-                  showInterface:(BOOL)showInterface {
-  Font *font = [[Font alloc] initWithFamilyName:familyName styleName:styleName showInterface:showInterface];
+- (FSFont *)newFontWithFamilyName:(NSString *)familyName
+                        styleName:(NSString *)styleName
+                    showInterface:(BOOL)showInterface {
+  FSFont *font = [[FSFont alloc] initWithFamilyName:familyName styleName:styleName showInterface:showInterface];
   [_fonts addObject:font];
   return font;
 }
@@ -127,7 +127,7 @@ static PyObject *fontParts_world_AllFonts(PyObject *self, PyObject *args, PyObje
 
   PyObject *list = PyList_New(0);
 
-  for (Font *font in script.fonts) {
+  for (FSFont *font in script.fonts) {
     if (font.pyObject == NULL) {
       // We neet to connect-up a peer
       FontObject *fontObject = (FontObject *)FontType.tp_alloc(&FontType, 0);
@@ -152,9 +152,9 @@ static PyObject *fontParts_world_NewFont(PyObject *self, PyObject *args, PyObjec
                                      &familyName, &styleName, &showInterface))
       return NULL;
 
-    Font *font = [script newFontWithFamilyName:[NSString stringWithUTF8String:familyName]
-                                     styleName:[NSString stringWithUTF8String:styleName]
-                                 showInterface:showInterface];
+    FSFont *font = [script newFontWithFamilyName:[NSString stringWithUTF8String:familyName]
+                                       styleName:[NSString stringWithUTF8String:styleName]
+                                   showInterface:showInterface];
     fontObject->font = font;
     font.pyObject = fontObject;
   }

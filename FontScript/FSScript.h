@@ -1,5 +1,5 @@
 //
-//  Script.h
+//  FSScript.h
 //  FontScript
 //
 //  Created by David Schweinsberg on 5/25/18.
@@ -8,20 +8,21 @@
 
 #import <Foundation/Foundation.h>
 
-@class Font;
+@class FSFont;
 
-@interface Script : NSObject
+NS_SWIFT_NAME(Script)
+@interface FSScript : NSObject
 
-@property(readonly) NSArray<Font *> *fonts;
+@property(readonly) NSArray<FSFont *> *fonts;
 
-- (instancetype)initWithPath:(NSString *)path NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithPath:(NSString *)path NS_DESIGNATED_INITIALIZER;
 - (instancetype)init __attribute__((unavailable));
 
 - (void)importModule:(NSString *)moduleName;
 - (void)runModule:(NSString *)moduleName function:(NSString *)functionName arguments:(NSArray *)args;
 
-- (Font *)newFontWithFamilyName:(NSString *)familyName
-                      styleName:(NSString *)styleName
-                  showInterface:(BOOL)showInterface;
+- (FSFont *)newFontWithFamilyName:(NSString *)familyName
+                        styleName:(NSString *)styleName
+                    showInterface:(BOOL)showInterface;
 
 @end

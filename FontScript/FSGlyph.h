@@ -1,5 +1,5 @@
 //
-//  Glyph.h
+//  FSGlyph.h
 //  FontScript
 //
 //  Created by David Schweinsberg on 5/28/18.
@@ -8,19 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
-@class Font;
-@class Layer;
-@class Contour;
-@protocol AbstractPen;
+@class FSFont;
+@class FSLayer;
+@class FSContour;
+@protocol FSAbstractPen;
 
-@interface Glyph : NSObject <NSCopying>
+NS_SWIFT_NAME(Glyph)
+@interface FSGlyph : NSObject <NSCopying>
 
-- (instancetype)initWithName:(nonnull NSString *)name layer:(nullable Layer *)layer NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithName:(nonnull NSString *)name layer:(nullable FSLayer *)layer NS_DESIGNATED_INITIALIZER;
 - (instancetype)init __attribute__((unavailable));
 
 // Parents
-@property(weak) Layer *layer;
-@property(weak) Font *font;
+@property(weak) FSLayer *layer;
+@property(weak) FSFont *font;
 
 // Identification
 @property(nonnull) NSString *name;
@@ -40,19 +41,19 @@
 @property(readonly) CGRect bounds;
 
 // Pens and Drawing
-- (void)drawWithPen:(NSObject<AbstractPen> *)pen;
+- (void)drawWithPen:(NSObject<FSAbstractPen> *)pen;
 
 // Layers
 
 // Global
 
 // Contours
-@property(nonnull, readonly) NSArray<Contour *> *contours;
-- (Contour *)appendContour:(nonnull Contour *)contour offset:(CGPoint)offset;
-- (BOOL)removeContour:(nonnull Contour *)contour error:(NSError **)error;
+@property(nonnull, readonly) NSArray<FSContour *> *contours;
+- (FSContour *)appendContour:(nonnull FSContour *)contour offset:(CGPoint)offset;
+- (BOOL)removeContour:(nonnull FSContour *)contour error:(NSError **)error;
 - (BOOL)removeContourAtIndex:(NSUInteger)index error:(NSError **)error;
 - (void)clearContours;
-- (BOOL)reorderContour:(nonnull Contour *)contour toIndex:(NSUInteger)index error:(NSError **)error;
+- (BOOL)reorderContour:(nonnull FSContour *)contour toIndex:(NSUInteger)index error:(NSError **)error;
 
 // Components
 
