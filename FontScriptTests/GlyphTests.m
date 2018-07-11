@@ -158,10 +158,10 @@
   FSGlyph *glyph = [layer newGlyphWithName:@"A" clear:NO];
 
   FSContour *contour = [[FSContour alloc] initWithGlyph:nil];
-  [contour appendPoint:CGPointMake(100, 100) type:FSPointTypeMove smooth:NO];
-  [contour appendPoint:CGPointMake(100, -100) type:FSPointTypeLine smooth:NO];
-  [contour appendPoint:CGPointMake(-100, -100) type:FSPointTypeLine smooth:NO];
-  [contour appendPoint:CGPointMake(-100, 100) type:FSPointTypeLine smooth:NO];
+  [contour appendPoint:CGPointMake(100, 100) type:FSSegmentTypeMove smooth:NO];
+  [contour appendPoint:CGPointMake(100, -100) type:FSSegmentTypeLine smooth:NO];
+  [contour appendPoint:CGPointMake(-100, -100) type:FSSegmentTypeLine smooth:NO];
+  [contour appendPoint:CGPointMake(-100, 100) type:FSSegmentTypeLine smooth:NO];
   [glyph appendContour:contour offset:CGPointZero];
 
   CGRect bounds = glyph.bounds;

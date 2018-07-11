@@ -10,7 +10,7 @@
 #import "FSGlyph.h"
 #import "FSLayer.h"
 #import "FSFont.h"
-#import "FSAbstractPen.h"
+#import "FSPen.h"
 #import "FSIdentifier.h"
 
 @interface FSContour ()
@@ -84,33 +84,33 @@
 
 }
 
-- (void)drawWithPen:(NSObject<FSAbstractPen> *)pen {
+- (void)drawWithPen:(NSObject<FSPen> *)pen {
   for (FSPoint *point in _points) {
     switch (point.type) {
-      case FSPointTypeMove:
+      case FSSegmentTypeMove:
         [pen moveToPoint:point.cgPoint];
         break;
-      case FSPointTypeLine:
+      case FSSegmentTypeLine:
         [pen lineToPoint:point.cgPoint];
         break;
-      case FSPointTypeCurve:
+      case FSSegmentTypeCurve:
         // TODO
         break;
-      case FSPointTypeQCurve:
+      case FSSegmentTypeQCurve:
         // TODO
         break;
-      case FSPointTypeOffCurve:
+      case FSSegmentTypeOffCurve:
         // TODO
         break;
     }
   }
 }
 
-- (void)appendPoint:(CGPoint)point type:(FSPointType)type smooth:(BOOL)smooth {
+- (void)appendPoint:(CGPoint)point type:(FSSegmentType)type smooth:(BOOL)smooth {
   [_points addObject:[[FSPoint alloc] initWithPoint:point type:type smooth:smooth]];
 }
 
-- (void)insertPoint:(CGPoint)point type:(FSPointType)type smooth:(BOOL)smooth atIndex:(NSUInteger)index {
+- (void)insertPoint:(CGPoint)point type:(FSSegmentType)type smooth:(BOOL)smooth atIndex:(NSUInteger)index {
   [_points insertObject:[[FSPoint alloc] initWithPoint:point type:type smooth:smooth] atIndex:index];
 }
 

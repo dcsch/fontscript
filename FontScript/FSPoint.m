@@ -22,7 +22,7 @@
 
 @implementation FSPoint
 
-- (nonnull instancetype)initWithPoint:(CGPoint)cgPoint type:(FSPointType)type smooth:(BOOL)smooth {
+- (nonnull instancetype)initWithPoint:(CGPoint)cgPoint type:(FSSegmentType)type smooth:(BOOL)smooth {
   self = [super init];
   if (self) {
     _x = cgPoint.x;
@@ -64,17 +64,9 @@
   return _identifier;
 }
 
-//- (NSUInteger)index {
-//  return [self.glyph.contours indexOfObject:self];
-//}
-//
-//- (void)setIndex:(NSUInteger)index {
-//  [self.glyph reorderContour:self toIndex:index error:nil];
-//}
-//
-//- (void)setIndex:(NSUInteger)index error:(NSError **)error {
-//  [self.glyph reorderContour:self toIndex:index error:error];
-//}
+- (NSUInteger)index {
+  return [self.contour.points indexOfObject:self];
+}
 
 - (CGPoint)cgPoint {
   return CGPointMake(_x, _y);
@@ -83,6 +75,11 @@
 - (void)setCgPoint:(CGPoint)cgPoint {
   _x = cgPoint.x;
   _y = cgPoint.y;
+}
+
+- (void)round {
+  _x = llrint(_x);
+  _y = llrint(_y);
 }
 
 @end

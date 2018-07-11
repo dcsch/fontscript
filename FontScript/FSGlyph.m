@@ -216,7 +216,7 @@
 - (void)moveBy:(CGPoint)point {
 }
 
-- (void)drawWithPen:(NSObject<FSAbstractPen> *)pen {
+- (void)drawWithPen:(NSObject<FSPen> *)pen {
   for (FSContour *contour in self.contours) {
     [contour drawWithPen:pen];
   }

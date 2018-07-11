@@ -11,7 +11,7 @@
 @class FSFont;
 @class FSLayer;
 @class FSContour;
-@protocol FSAbstractPen;
+@protocol FSPen;
 
 NS_SWIFT_NAME(Glyph)
 @interface FSGlyph : NSObject <NSCopying>
@@ -41,7 +41,7 @@ NS_SWIFT_NAME(Glyph)
 @property(readonly) CGRect bounds;
 
 // Pens and Drawing
-- (void)drawWithPen:(NSObject<FSAbstractPen> *)pen;
+- (void)drawWithPen:(NSObject<FSPen> *)pen;
 
 // Layers
 

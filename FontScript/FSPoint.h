@@ -7,25 +7,26 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "FSSegment.h"
 
 @class FSContour;
 @class FSGlyph;
 @class FSLayer;
 @class FSFont;
 
-typedef NS_ENUM(NSUInteger, FSPointType)
-{
-  FSPointTypeMove,
-  FSPointTypeLine,
-  FSPointTypeCurve,
-  FSPointTypeQCurve,
-  FSPointTypeOffCurve
-} NS_SWIFT_NAME(Point.Type);
+//typedef NS_ENUM(NSUInteger, FSPointType)
+//{
+//  FSPointTypeMove,
+//  FSPointTypeLine,
+//  FSPointTypeCurve,
+//  FSPointTypeQCurve,
+//  FSPointTypeOffCurve
+//} NS_SWIFT_NAME(Point.Type);
 
 NS_SWIFT_NAME(Point)
 @interface FSPoint : NSObject <NSCopying>
 
-- (nonnull instancetype)initWithPoint:(CGPoint)cgPoint type:(FSPointType)type smooth:(BOOL)smooth NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithPoint:(CGPoint)cgPoint type:(FSSegmentType)type smooth:(BOOL)smooth NS_DESIGNATED_INITIALIZER;
 - (instancetype)init __attribute__((unavailable));
 
 // Parents
@@ -37,7 +38,7 @@ NS_SWIFT_NAME(Point)
 // Identification
 @property(nullable) NSString *name;
 @property(readonly) NSString *identifier;
-@property NSUInteger index;
+@property(readonly) NSUInteger index;
 
 // Coordinate
 @property CGFloat x;
@@ -45,7 +46,10 @@ NS_SWIFT_NAME(Point)
 @property CGPoint cgPoint;
 
 // Type
-@property FSPointType type;
+@property FSSegmentType type;
 @property BOOL smooth;
+
+// Normalization
+- (void)round;
 
 @end
