@@ -40,6 +40,8 @@ static NSString *_RandomIdentifier(NSArray<NSString *> *existing, NSUInteger rec
 
 @implementation FSIdentifier
 
+// TODO: This doesn't allow existing identifiers to be loaded externally.
+// We'll need this when loading existing fonts
 + (NSString *)RandomIdentifierWithError:(NSError **)error {
   static NSMutableArray<NSString *> *existing = nil;
   if (!existing) {

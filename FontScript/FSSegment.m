@@ -26,8 +26,4 @@
   return self;
 }
 
-//- (nonnull instancetype)init {
-//  return [self initWithPoints:[NSArray array]];
-//}
-
 @end

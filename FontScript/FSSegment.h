@@ -15,8 +15,7 @@ typedef NS_ENUM(NSUInteger, FSSegmentType)
   FSSegmentTypeMove,
   FSSegmentTypeLine,
   FSSegmentTypeCurve,
-  FSSegmentTypeQCurve,
-  FSSegmentTypeOffCurve
+  FSSegmentTypeQCurve
 } NS_SWIFT_NAME(Segment.Type);
 
 NS_SWIFT_NAME(Segment)

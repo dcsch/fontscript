@@ -27,7 +27,7 @@
 
 - (void)testRounding {
   FSPoint *point = [[FSPoint alloc] initWithPoint:CGPointMake(0.0, 0.0)
-                                             type:FSSegmentTypeMove
+                                             type:FSPointTypeMove
                                            smooth:FALSE];
   point.x = 0.1;
   [point round];

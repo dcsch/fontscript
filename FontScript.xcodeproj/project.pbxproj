@@ -24,6 +24,8 @@
 		035AD8D520B8CD68006494B7 /* FSScript.m in Sources */ = {isa = PBXBuildFile; fileRef = 035AD8D320B8CD68006494B7 /* FSScript.m */; };
 		035AD92020B8FFB3006494B7 /* Python.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 035AD91F20B8FFB3006494B7 /* Python.framework */; };
 		035AD92320B9044D006494B7 /* multiply.py in Resources */ = {isa = PBXBuildFile; fileRef = 035AD92220B9044D006494B7 /* multiply.py */; };
+		0366C7F120F6DE98003EEEB6 /* PointToSegmentPenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0366C7F020F6DE98003EEEB6 /* PointToSegmentPenTests.swift */; };
+		0366C7F320F6E825003EEEB6 /* TestPen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0366C7F220F6E825003EEEB6 /* TestPen.swift */; };
 		0378D28720CB375F00AFE4E3 /* FSPen.h in Headers */ = {isa = PBXBuildFile; fileRef = 0378D28620CB375F00AFE4E3 /* FSPen.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0378D28A20CB38AE00AFE4E3 /* FSBoundsPen.h in Headers */ = {isa = PBXBuildFile; fileRef = 0378D28820CB38AE00AFE4E3 /* FSBoundsPen.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0378D28B20CB38AE00AFE4E3 /* FSBoundsPen.m in Sources */ = {isa = PBXBuildFile; fileRef = 0378D28920CB38AE00AFE4E3 /* FSBoundsPen.m */; };
@@ -91,6 +93,8 @@
 		035AD91F20B8FFB3006494B7 /* Python.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Python.framework; path = ../../../../Library/Frameworks/Python.framework; sourceTree = "<group>"; };
 		035AD92220B9044D006494B7 /* multiply.py */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = text.script.python; path = multiply.py; sourceTree = "<group>"; tabWidth = 4; };
 		035AD92420BA1262006494B7 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		0366C7F020F6DE98003EEEB6 /* PointToSegmentPenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointToSegmentPenTests.swift; sourceTree = "<group>"; };
+		0366C7F220F6E825003EEEB6 /* TestPen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestPen.swift; sourceTree = "<group>"; };
 		0378D28620CB375F00AFE4E3 /* FSPen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSPen.h; sourceTree = "<group>"; };
 		0378D28820CB38AE00AFE4E3 /* FSBoundsPen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSBoundsPen.h; sourceTree = "<group>"; };
 		0378D28920CB38AE00AFE4E3 /* FSBoundsPen.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FSBoundsPen.m; sourceTree = "<group>"; };
@@ -249,6 +253,8 @@
 			isa = PBXGroup;
 			children = (
 				03E49DE520F00E650039776E /* FontScriptSwiftTests.swift */,
+				0366C7F020F6DE98003EEEB6 /* PointToSegmentPenTests.swift */,
+				0366C7F220F6E825003EEEB6 /* TestPen.swift */,
 				03E49DE720F00E650039776E /* Info.plist */,
 			);
 			path = FontScriptSwiftTests;
@@ -445,6 +451,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				03E49DE620F00E650039776E /* FontScriptSwiftTests.swift in Sources */,
+				0366C7F120F6DE98003EEEB6 /* PointToSegmentPenTests.swift in Sources */,
+				0366C7F320F6E825003EEEB6 /* TestPen.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

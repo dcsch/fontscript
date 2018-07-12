@@ -158,10 +158,37 @@
   FSGlyph *glyph = [layer newGlyphWithName:@"A" clear:NO];
 
   FSContour *contour = [[FSContour alloc] initWithGlyph:nil];
-  [contour appendPoint:CGPointMake(100, 100) type:FSSegmentTypeMove smooth:NO];
-  [contour appendPoint:CGPointMake(100, -100) type:FSSegmentTypeLine smooth:NO];
-  [contour appendPoint:CGPointMake(-100, -100) type:FSSegmentTypeLine smooth:NO];
-  [contour appendPoint:CGPointMake(-100, 100) type:FSSegmentTypeLine smooth:NO];
+  [contour appendPoint:CGPointMake(100, 100) type:FSPointTypeMove smooth:NO];
+  [contour appendPoint:CGPointMake(100, -100) type:FSPointTypeLine smooth:NO];
+  [contour appendPoint:CGPointMake(-100, -100) type:FSPointTypeLine smooth:NO];
+  [contour appendPoint:CGPointMake(-100, 100) type:FSPointTypeLine smooth:NO];
+  [glyph appendContour:contour offset:CGPointZero];
+
+  CGRect bounds = glyph.bounds;
+  XCTAssertEqual(CGRectGetMinX(bounds), -100);
+  XCTAssertEqual(CGRectGetMinY(bounds), -100);
+  XCTAssertEqual(CGRectGetMaxX(bounds), 100);
+  XCTAssertEqual(CGRectGetMaxY(bounds), 100);
+}
+
+- (void)testGlyphCurveBounds {
+  FSScript *script = [[FSScript alloc] initWithPath:testBundle.resourceURL.path];
+  FSFont *font = [script newFontWithFamilyName:@"Test Family"
+                                     styleName:@"Test Style"
+                                 showInterface:NO];
+  FSLayer *layer = [font newLayerWithName:@"Test Layer" color:nil];
+  FSGlyph *glyph = [layer newGlyphWithName:@"D" clear:NO];
+
+  FSContour *contour = [[FSContour alloc] initWithGlyph:nil];
+  [contour appendPoint:CGPointMake(-100, 100) type:FSPointTypeLine smooth:NO];
+  [contour appendPoint:CGPointMake(0, 100) type:FSPointTypeLine smooth:NO];
+  [contour appendPoint:CGPointMake(50, 100) type:FSPointTypeOffCurve smooth:NO];
+  [contour appendPoint:CGPointMake(100, 50) type:FSPointTypeOffCurve smooth:NO];
+  [contour appendPoint:CGPointMake(100, 0) type:FSPointTypeCurve smooth:NO];
+  [contour appendPoint:CGPointMake(100, -50) type:FSPointTypeOffCurve smooth:NO];
+  [contour appendPoint:CGPointMake(50, -100) type:FSPointTypeOffCurve smooth:NO];
+  [contour appendPoint:CGPointMake(0, -100) type:FSPointTypeCurve smooth:NO];
+  [contour appendPoint:CGPointMake(-100, -100) type:FSPointTypeLine smooth:NO];
   [glyph appendContour:contour offset:CGPointZero];
 
   CGRect bounds = glyph.bounds;

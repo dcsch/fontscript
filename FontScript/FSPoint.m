@@ -22,7 +22,7 @@
 
 @implementation FSPoint
 
-- (nonnull instancetype)initWithPoint:(CGPoint)cgPoint type:(FSSegmentType)type smooth:(BOOL)smooth {
+- (nonnull instancetype)initWithPoint:(CGPoint)cgPoint type:(FSPointType)type smooth:(BOOL)smooth {
   self = [super init];
   if (self) {
     _x = cgPoint.x;

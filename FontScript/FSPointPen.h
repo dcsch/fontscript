@@ -8,17 +8,20 @@
 
 #import <Foundation/Foundation.h>
 #import "FSSegment.h"
+#import "FSPoint.h"
 
 NS_SWIFT_NAME(PointPen)
 @protocol FSPointPen <NSObject>
 - (void)beginPath;
 - (void)beginPathWithIdentifier:(nullable NSString *)identifier;
 - (void)endPath;
+- (void)addPoint:(nonnull FSPoint *)point;
+- (void)addPoints:(nonnull NSArray<FSPoint *> *)points;
 - (void)addPointWithPoint:(CGPoint)pt
-              segmentType:(FSSegmentType)segmentType
+                pointType:(FSPointType)pointType
                    smooth:(BOOL)smooth;
 - (void)addPointWithPoint:(CGPoint)pt
-              segmentType:(FSSegmentType)segmentType
+                pointType:(FSPointType)pointType
                    smooth:(BOOL)smooth
                      name:(nullable NSString *)name
                identifier:(nullable NSString *)identifier;

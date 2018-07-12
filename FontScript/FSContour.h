@@ -13,6 +13,7 @@
 @class FSLayer;
 @class FSFont;
 @protocol FSPen;
+@protocol FSPointPen;
 
 NS_SWIFT_NAME(Contour)
 @interface FSContour : NSObject <NSCopying>
@@ -37,6 +38,7 @@ NS_SWIFT_NAME(Contour)
 
 // Pens and Drawing
 - (void)drawWithPen:(NSObject<FSPen> *)pen;
+- (void)drawWithPointPen:(NSObject<FSPointPen> *)pen;
 
 // Segments
 
@@ -44,8 +46,8 @@ NS_SWIFT_NAME(Contour)
 
 // Points
 @property(readonly) NSArray<FSPoint *> *points;
-- (void)appendPoint:(CGPoint)point type:(FSSegmentType)type smooth:(BOOL)smooth;
-- (void)insertPoint:(CGPoint)point type:(FSSegmentType)type smooth:(BOOL)smooth atIndex:(NSUInteger)index;
+- (void)appendPoint:(CGPoint)point type:(FSPointType)type smooth:(BOOL)smooth;
+- (void)insertPoint:(CGPoint)point type:(FSPointType)type smooth:(BOOL)smooth atIndex:(NSUInteger)index;
 - (void)removePoint:(CGPoint)point;
 
 // Transformations

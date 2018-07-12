@@ -14,19 +14,19 @@
 @class FSLayer;
 @class FSFont;
 
-//typedef NS_ENUM(NSUInteger, FSPointType)
-//{
-//  FSPointTypeMove,
-//  FSPointTypeLine,
-//  FSPointTypeCurve,
-//  FSPointTypeQCurve,
-//  FSPointTypeOffCurve
-//} NS_SWIFT_NAME(Point.Type);
+typedef NS_ENUM(NSUInteger, FSPointType)
+{
+  FSPointTypeMove,
+  FSPointTypeLine,
+  FSPointTypeCurve,
+  FSPointTypeQCurve,
+  FSPointTypeOffCurve
+} NS_SWIFT_NAME(Point.Type);
 
 NS_SWIFT_NAME(Point)
 @interface FSPoint : NSObject <NSCopying>
 
-- (nonnull instancetype)initWithPoint:(CGPoint)cgPoint type:(FSSegmentType)type smooth:(BOOL)smooth NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithPoint:(CGPoint)cgPoint type:(FSPointType)type smooth:(BOOL)smooth NS_DESIGNATED_INITIALIZER;
 - (instancetype)init __attribute__((unavailable));
 
 // Parents
@@ -46,7 +46,7 @@ NS_SWIFT_NAME(Point)
 @property CGPoint cgPoint;
 
 // Type
-@property FSSegmentType type;
+@property FSPointType type;
 @property BOOL smooth;
 
 // Normalization
