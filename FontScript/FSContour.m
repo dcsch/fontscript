@@ -96,6 +96,56 @@
   [pen endPath];
 }
 
+- (NSArray<FSSegment *> *)segments {
+  if (_points.count == 0) {
+    return [NSArray array];
+  }
+
+  BOOL lastWasOffCurve = NO;
+  BOOL firstIsMove = _points[0].type == FSPointTypeMove;
+
+  // Build an array of arrays of points for each segment
+  NSMutableArray<NSMutableArray *> *segmentsOfPoints = [NSMutableArray arrayWithObject:[NSMutableArray array]];
+  for (FSPoint *point in _points) {
+    [segmentsOfPoints.lastObject addObject:point];
+    if (point.type != FSPointTypeOffCurve) {
+      [segmentsOfPoints addObject:[NSMutableArray array]];
+    }
+    lastWasOffCurve = point.type == FSPointTypeOffCurve;
+  }
+
+  if (segmentsOfPoints.lastObject.count == 0) {
+    [segmentsOfPoints removeLastObject];
+  }
+
+  if (lastWasOffCurve && firstIsMove) {
+    [segmentsOfPoints removeLastObject];
+  }
+
+  if (lastWasOffCurve && !firstIsMove) {
+    NSMutableArray *segment = segmentsOfPoints.lastObject;
+    [segmentsOfPoints removeLastObject];
+    [segment addObject:segmentsOfPoints[0][0]];
+    [segmentsOfPoints removeObjectAtIndex:0];
+    [segmentsOfPoints addObject:segment];
+  }
+
+  if (!lastWasOffCurve && !firstIsMove) {
+    NSMutableArray *segment = segmentsOfPoints[0];
+    [segmentsOfPoints removeObjectAtIndex:0];
+    [segmentsOfPoints addObject:segment];
+  }
+
+  // Build the segments for each array of points
+  NSMutableArray<FSSegment *> *segments = [NSMutableArray array];
+  for (NSMutableArray *points in segmentsOfPoints) {
+    FSSegment *segment = [[FSSegment alloc] initWithPoints:points];
+    segment.contour = self;
+    [segments addObject:segment];
+  }
+  return segments;
+}
+
 - (void)appendPoint:(CGPoint)point type:(FSPointType)type smooth:(BOOL)smooth {
   [_points addObject:[[FSPoint alloc] initWithPoint:point type:type smooth:smooth]];
 }

@@ -26,6 +26,7 @@
 		035AD92320B9044D006494B7 /* multiply.py in Resources */ = {isa = PBXBuildFile; fileRef = 035AD92220B9044D006494B7 /* multiply.py */; };
 		0366C7F120F6DE98003EEEB6 /* PointToSegmentPenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0366C7F020F6DE98003EEEB6 /* PointToSegmentPenTests.swift */; };
 		0366C7F320F6E825003EEEB6 /* TestPen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0366C7F220F6E825003EEEB6 /* TestPen.swift */; };
+		0366C7F520F831CD003EEEB6 /* FSSegmentTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0366C7F420F831CD003EEEB6 /* FSSegmentTests.m */; };
 		0378D28720CB375F00AFE4E3 /* FSPen.h in Headers */ = {isa = PBXBuildFile; fileRef = 0378D28620CB375F00AFE4E3 /* FSPen.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0378D28A20CB38AE00AFE4E3 /* FSBoundsPen.h in Headers */ = {isa = PBXBuildFile; fileRef = 0378D28820CB38AE00AFE4E3 /* FSBoundsPen.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0378D28B20CB38AE00AFE4E3 /* FSBoundsPen.m in Sources */ = {isa = PBXBuildFile; fileRef = 0378D28920CB38AE00AFE4E3 /* FSBoundsPen.m */; };
@@ -35,7 +36,7 @@
 		03879D5420C1DD5D0033A7C4 /* FSInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 03879D5220C1DD5D0033A7C4 /* FSInfo.m */; };
 		03B1077F20C9FCCB008C05E3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03B1078120C9FCCB008C05E3 /* Localizable.strings */; };
 		03B1078320CA0693008C05E3 /* FontScript.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B1078220CA0693008C05E3 /* FontScript.m */; };
-		03E49DDA20EEEBA50039776E /* ContourTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E49DD920EEEBA50039776E /* ContourTests.m */; };
+		03E49DDA20EEEBA50039776E /* FSContourTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E49DD920EEEBA50039776E /* FSContourTests.m */; };
 		03E49DDD20EFFCDF0039776E /* FSPoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 03E49DDB20EFFCDF0039776E /* FSPoint.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		03E49DDE20EFFCDF0039776E /* FSPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E49DDC20EFFCDF0039776E /* FSPoint.m */; };
 		03E49DE620F00E650039776E /* FontScriptSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E49DE520F00E650039776E /* FontScriptSwiftTests.swift */; };
@@ -95,6 +96,7 @@
 		035AD92420BA1262006494B7 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		0366C7F020F6DE98003EEEB6 /* PointToSegmentPenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointToSegmentPenTests.swift; sourceTree = "<group>"; };
 		0366C7F220F6E825003EEEB6 /* TestPen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestPen.swift; sourceTree = "<group>"; };
+		0366C7F420F831CD003EEEB6 /* FSSegmentTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FSSegmentTests.m; sourceTree = "<group>"; };
 		0378D28620CB375F00AFE4E3 /* FSPen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSPen.h; sourceTree = "<group>"; };
 		0378D28820CB38AE00AFE4E3 /* FSBoundsPen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSBoundsPen.h; sourceTree = "<group>"; };
 		0378D28920CB38AE00AFE4E3 /* FSBoundsPen.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FSBoundsPen.m; sourceTree = "<group>"; };
@@ -105,7 +107,7 @@
 		03879D5220C1DD5D0033A7C4 /* FSInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FSInfo.m; sourceTree = "<group>"; };
 		03B1078020C9FCCB008C05E3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		03B1078220CA0693008C05E3 /* FontScript.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FontScript.m; sourceTree = "<group>"; };
-		03E49DD920EEEBA50039776E /* ContourTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContourTests.m; sourceTree = "<group>"; };
+		03E49DD920EEEBA50039776E /* FSContourTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FSContourTests.m; sourceTree = "<group>"; };
 		03E49DDB20EFFCDF0039776E /* FSPoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSPoint.h; sourceTree = "<group>"; };
 		03E49DDC20EFFCDF0039776E /* FSPoint.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FSPoint.m; sourceTree = "<group>"; };
 		03E49DE320F00E650039776E /* FontScriptSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FontScriptSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -217,7 +219,8 @@
 				035AD92120B9042C006494B7 /* scripts */,
 				035AD8C620B8CC97006494B7 /* FontScriptTests.m */,
 				03F46A2020D316100073B844 /* GlyphTests.m */,
-				03E49DD920EEEBA50039776E /* ContourTests.m */,
+				03E49DD920EEEBA50039776E /* FSContourTests.m */,
+				0366C7F420F831CD003EEEB6 /* FSSegmentTests.m */,
 				03E49DF220F3F5140039776E /* FSPointTests.m */,
 				03F46A1A20D1DE9D0073B844 /* BoundsPenTests.m */,
 				0321744D20F56D3F0046C12F /* FSPointToSegmentPenTests.m */,
@@ -439,8 +442,9 @@
 			files = (
 				0321744E20F56D3F0046C12F /* FSPointToSegmentPenTests.m in Sources */,
 				03F46A1B20D1DE9D0073B844 /* BoundsPenTests.m in Sources */,
+				0366C7F520F831CD003EEEB6 /* FSSegmentTests.m in Sources */,
 				035AD8C720B8CC97006494B7 /* FontScriptTests.m in Sources */,
-				03E49DDA20EEEBA50039776E /* ContourTests.m in Sources */,
+				03E49DDA20EEEBA50039776E /* FSContourTests.m in Sources */,
 				03E49DF320F3F5140039776E /* FSPointTests.m in Sources */,
 				03F46A2120D316100073B844 /* GlyphTests.m in Sources */,
 			);

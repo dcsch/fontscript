@@ -12,6 +12,7 @@
 @class FSGlyph;
 @class FSLayer;
 @class FSFont;
+@class FSSegment;
 @protocol FSPen;
 @protocol FSPointPen;
 
@@ -41,6 +42,7 @@ NS_SWIFT_NAME(Contour)
 - (void)drawWithPointPen:(NSObject<FSPointPen> *)pen;
 
 // Segments
+@property(nonnull, readonly) NSArray<FSSegment *> *segments;
 
 // bPoints
 

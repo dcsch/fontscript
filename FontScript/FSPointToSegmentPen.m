@@ -41,17 +41,15 @@
   if (_points.count == 0) {
     return;
   } else if (_points.count == 1) {
-    [segments addObject:[[FSSegment alloc] initWithType:FSSegmentTypeMove
-                                                 points:_points]];
+    [segments addObject:[[FSSegment alloc] initWithPoints:_points]];
     [self flushSegments:segments];
     return;
   }
 
-  if (_points[0].type == FSSegmentTypeMove) {
+  if (_points[0].type == FSPointTypeMove) {
     // For an open contour, insert a "move" segment for this point
     // and remove it from the point array
-    [segments addObject:[[FSSegment alloc] initWithType:FSSegmentTypeMove
-                                                 points:[NSArray arrayWithObject:_points[0]]]];
+    [segments addObject:[[FSSegment alloc] initWithPoints:[NSArray arrayWithObject:_points[0]]]];
     [_points removeObjectAtIndex:0];
   } else {
     // For a closed contour, locate the first onCurve point and
@@ -80,25 +78,10 @@
   NSMutableArray<FSPoint *> *segmentPoints = [NSMutableArray array];
   for (FSPoint *point in _points) {
     [segmentPoints addObject:point];
-    FSSegmentType segmentType;
-    switch (point.type) {
-      case FSPointTypeMove:
-        segmentType = FSSegmentTypeMove;
-        break;
-      case FSPointTypeLine:
-        segmentType = FSSegmentTypeLine;
-        break;
-      case FSPointTypeCurve:
-        segmentType = FSSegmentTypeCurve;
-        break;
-      case FSPointTypeQCurve:
-        segmentType = FSSegmentTypeQCurve;
-        break;
-      case FSPointTypeOffCurve:
-        continue;
+    if (point.type == FSPointTypeOffCurve) {
+      continue;
     }
-    [segments addObject:[[FSSegment alloc] initWithType:segmentType
-                                                 points:segmentPoints]];
+    [segments addObject:[[FSSegment alloc] initWithPoints:segmentPoints]];
     segmentPoints = [NSMutableArray array];
   }
   [self flushSegments:segments];
