@@ -24,16 +24,16 @@ NS_SWIFT_NAME(Pen)
  */
 - (void)lineToPoint:(CGPoint)point;
 
-- (void)curveToPoints:(nonnull NSArray<NSValue *> *)points;
+- (void)curveToPoints:(nonnull NSArray<NSValue *> *)points NS_SWIFT_NAME(curve(to:));
 
-- (void)qCurveToPoints:(nonnull NSArray<NSValue *> *)points;
+- (void)qCurveToPoints:(nonnull NSArray<NSValue *> *)points NS_SWIFT_NAME(qCurve(to:));
 
 - (void)closePath;
 
 - (void)endPath;
 
-- (void)addComponentWithName:(nonnull NSString *)glyphName
+- (BOOL)addComponentWithName:(nonnull NSString *)name
               transformation:(CGAffineTransform)transformation
-                       error:(NSError **)error;
+                       error:(NSError **)error NS_SWIFT_NAME(addComponent(name:transformation:));
 
 @end

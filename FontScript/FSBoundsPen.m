@@ -154,9 +154,10 @@ static void calcCubicPoints(CGPoint pt1,
 - (void)endPath {
 }
 
-- (void)addComponentWithName:(NSString *)glyphName
+- (BOOL)addComponentWithName:(NSString *)glyphName
               transformation:(CGAffineTransform)transformation
                        error:(NSError **)error {
+  return YES;
 }
 
 @end

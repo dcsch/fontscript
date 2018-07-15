@@ -21,7 +21,7 @@ class TestPen: NSObject, Pen {
     records.append("lineTo (\(point.x), \(point.y))")
   }
 
-  func curve(toPoints points: [NSValue]) {
+  func curve(to points: [NSValue]) {
     var str = "curveTo"
     for point in points {
       str += " (\(point.pointValue.x), \(point.pointValue.y))"
@@ -29,7 +29,7 @@ class TestPen: NSObject, Pen {
     records.append(str)
   }
 
-  func qCurve(toPoints points: [NSValue]) {
+  func qCurve(to points: [NSValue]) {
     var str = "qCurveTo"
     for point in points {
       str += " (\(point.pointValue.x), \(point.pointValue.y))"
@@ -45,8 +45,8 @@ class TestPen: NSObject, Pen {
     records.append("endPath")
   }
 
-  func addComponent(withName glyphName: String, transformation: CGAffineTransform, error: NSErrorPointer) {
-    records.append("addComponent \(glyphName)")
+  func addComponent(name: String, transformation: CGAffineTransform) throws {
+    records.append("addComponent \(name)")
   }
 
 }

@@ -116,11 +116,11 @@
   [_points addObject:point];
 }
 
-- (void)addComponentWithBaseGlyphName:(nonnull NSString *)baseGlyphName
+- (BOOL)addComponentWithBaseGlyphName:(nonnull NSString *)baseGlyphName
                        transformation:(CGAffineTransform)transformation
                            identifier:(nullable NSString *)identifier
                                 error:(NSError *__autoreleasing *)error {
-  [_pen addComponentWithName:baseGlyphName transformation:transformation error:error];
+  return [_pen addComponentWithName:baseGlyphName transformation:transformation error:error];
 }
 
 - (void)flushSegments:(nonnull NSArray<FSSegment *> *)segments {

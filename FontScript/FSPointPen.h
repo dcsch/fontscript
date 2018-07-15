@@ -25,7 +25,7 @@ NS_SWIFT_NAME(PointPen)
                    smooth:(BOOL)smooth
                      name:(nullable NSString *)name
                identifier:(nullable NSString *)identifier;
-- (void)addComponentWithBaseGlyphName:(nonnull NSString *)baseGlyphName
+- (BOOL)addComponentWithBaseGlyphName:(nonnull NSString *)baseGlyphName
                        transformation:(CGAffineTransform)transformation
                            identifier:(nullable NSString *)identifier
                                 error:(NSError **)error;
