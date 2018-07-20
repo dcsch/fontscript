@@ -11,7 +11,9 @@
 @class FSFont;
 @class FSLayer;
 @class FSContour;
+@class FSComponent;
 @protocol FSPen;
+@protocol FSPointPen;
 
 NS_SWIFT_NAME(Glyph)
 @interface FSGlyph : NSObject <NSCopying>
@@ -42,6 +44,7 @@ NS_SWIFT_NAME(Glyph)
 
 // Pens and Drawing
 - (void)drawWithPen:(NSObject<FSPen> *)pen;
+- (void)drawWithPointPen:(NSObject<FSPointPen> *)pointPen;
 
 // Layers
 
@@ -56,6 +59,7 @@ NS_SWIFT_NAME(Glyph)
 - (BOOL)reorderContour:(nonnull FSContour *)contour toIndex:(NSUInteger)index error:(NSError **)error;
 
 // Components
+@property(readonly) NSArray<FSComponent *> *components;
 
 // Anchors
 

@@ -13,18 +13,18 @@
 NS_SWIFT_NAME(PointPen)
 @protocol FSPointPen <NSObject>
 - (void)beginPath;
-- (void)beginPathWithIdentifier:(nullable NSString *)identifier;
+- (void)beginPathWithIdentifier:(nonnull NSString *)identifier NS_SWIFT_NAME(beginPath(identifier:));
 - (void)endPath;
-- (void)addPoint:(nonnull FSPoint *)point;
-- (void)addPoints:(nonnull NSArray<FSPoint *> *)points;
-- (void)addPointWithPoint:(CGPoint)pt
-                pointType:(FSPointType)pointType
-                   smooth:(BOOL)smooth;
-- (void)addPointWithPoint:(CGPoint)pt
-                pointType:(FSPointType)pointType
-                   smooth:(BOOL)smooth
-                     name:(nullable NSString *)name
-               identifier:(nullable NSString *)identifier;
+- (void)addPoint:(nonnull FSPoint *)point NS_SWIFT_NAME(addPoint(_:));
+- (void)addPoints:(nonnull NSArray<FSPoint *> *)points NS_SWIFT_NAME(addPoints(_:));
+- (void)addPoint:(CGPoint)point
+            type:(FSPointType)type
+          smooth:(BOOL)smooth NS_SWIFT_NAME(addCGPoint(_:type:smooth:));
+- (void)addPoint:(CGPoint)point
+            type:(FSPointType)type
+          smooth:(BOOL)smooth
+            name:(nullable NSString *)name
+      identifier:(nullable NSString *)identifier NS_SWIFT_NAME(addCGPoint(_:type:smooth:name:identifier:));
 - (BOOL)addComponentWithBaseGlyphName:(nonnull NSString *)baseGlyphName
                        transformation:(CGAffineTransform)transformation
                            identifier:(nullable NSString *)identifier

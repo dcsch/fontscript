@@ -95,25 +95,25 @@
   [_points addObjectsFromArray:points];
 }
 
-- (void)addPointWithPoint:(CGPoint)pt
-                pointType:(FSPointType)pointType
-                   smooth:(BOOL)smooth {
-  [self addPointWithPoint:pt
-                pointType:pointType
-                   smooth:smooth
-                     name:nil
-               identifier:nil];
+- (void)addPoint:(CGPoint)point
+            type:(FSPointType)type
+          smooth:(BOOL)smooth {
+  [self addPoint:point
+            type:type
+          smooth:smooth
+            name:nil
+      identifier:nil];
 }
 
-- (void)addPointWithPoint:(CGPoint)pt
-                pointType:(FSPointType)pointType
-                   smooth:(BOOL)smooth
-                     name:(nullable NSString *)name
-               identifier:(nullable NSString *)identifier {
-  FSPoint *point = [[FSPoint alloc] initWithPoint:pt type:pointType smooth:smooth];
-  point.name = name;
-//  point.identifier = identifier;
-  [_points addObject:point];
+- (void)addPoint:(CGPoint)point
+            type:(FSPointType)type
+          smooth:(BOOL)smooth
+            name:(nullable NSString *)name
+      identifier:(nullable NSString *)identifier {
+  FSPoint *pt = [[FSPoint alloc] initWithPoint:point type:type smooth:smooth];
+  pt.name = name;
+//  pt.identifier = identifier;
+  [_points addObject:pt];
 }
 
 - (BOOL)addComponentWithBaseGlyphName:(nonnull NSString *)baseGlyphName

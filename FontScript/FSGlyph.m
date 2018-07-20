@@ -8,6 +8,7 @@
 
 #import "FSGlyph.h"
 #import "FontScriptPrivate.h"
+#import "FSComponent.h"
 #import "FSBoundsPen.h"
 #include <Python/structmember.h>
 
@@ -16,6 +17,7 @@
   NSString *_name;
   NSArray<NSNumber *> *_unicodes;
   NSMutableArray<FSContour *> *_contours;
+  NSMutableArray<FSComponent *> *_components;
   GlyphObject *_pyObject;
 }
 
@@ -219,6 +221,18 @@
 - (void)drawWithPen:(NSObject<FSPen> *)pen {
   for (FSContour *contour in self.contours) {
     [contour drawWithPen:pen];
+  }
+  for (FSComponent *component in self.components) {
+    [component drawWithPen:pen];
+  }
+}
+
+- (void)drawWithPointPen:(NSObject<FSPointPen> *)pointPen {
+  for (FSContour *contour in self.contours) {
+    [contour drawWithPointPen:pointPen];
+  }
+  for (FSComponent *component in self.components) {
+    [component drawWithPointPen:pointPen];
   }
 }
 

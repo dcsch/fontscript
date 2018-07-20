@@ -35,6 +35,7 @@ NS_ERROR_ENUM(FontScriptErrorDomain)
 #import <FontScript/FSContour.h>
 #import <FontScript/FSSegment.h>
 #import <FontScript/FSPoint.h>
+#import <FontScript/FSComponent.h>
 #import <FontScript/FSInfo.h>
 #import <FontScript/FSPen.h>
 #import <FontScript/FSPointPen.h>
