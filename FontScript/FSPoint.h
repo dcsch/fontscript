@@ -49,7 +49,12 @@ NS_SWIFT_NAME(Point)
 @property FSPointType type;
 @property BOOL smooth;
 
+// Transformations
+- (void)transformBy:(CGAffineTransform)transform;
+
 // Normalization
 - (void)round;
+
+// Environment
 
 @end

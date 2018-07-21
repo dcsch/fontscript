@@ -1,5 +1,5 @@
 //
-//  GlyphTests.m
+//  FSGlyphTests.m
 //  FontScriptTests
 //
 //  Created by David Schweinsberg on 6/14/18.
@@ -9,14 +9,14 @@
 #import <XCTest/XCTest.h>
 #import "FontScript.h"
 
-@interface GlyphTests : XCTestCase
+@interface FSGlyphTests : XCTestCase
 {
   NSBundle *testBundle;
 }
 
 @end
 
-@implementation GlyphTests
+@implementation FSGlyphTests
 
 - (void)setUp {
   [super setUp];

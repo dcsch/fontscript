@@ -77,6 +77,12 @@
   _y = cgPoint.y;
 }
 
+- (void)transformBy:(CGAffineTransform)transform {
+  CGPoint p1 = CGPointApplyAffineTransform(self.cgPoint, transform);
+  _x = p1.x;
+  _y = p1.y;
+}
+
 - (void)round {
   _x = llrint(_x);
   _y = llrint(_y);

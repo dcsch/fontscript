@@ -53,6 +53,7 @@ NS_SWIFT_NAME(Contour)
 - (void)removePoint:(CGPoint)point;
 
 // Transformations
+- (void)transformBy:(CGAffineTransform)transform;
 - (void)moveBy:(CGPoint)point;
 
 // Normalization

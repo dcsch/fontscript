@@ -24,7 +24,8 @@ NS_ERROR_ENUM(FontScriptErrorDomain)
   FontScriptErrorGlyphNameInUse = -999,
   FontScriptErrorContourNotLocated = -1000,
   FontScriptErrorIndexOutOfRange = -1001,
-  FontScriptErrorIdentifierNotUnique = -1002
+  FontScriptErrorIdentifierNotUnique = -1002,
+  FontScriptErrorGlyphNotFoundInLayer = -1003
 };
 
 #import <FontScript/FSScript.h>

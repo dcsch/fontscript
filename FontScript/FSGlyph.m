@@ -32,6 +32,7 @@
     self.layer = layer;
     self.unicodes = [NSArray array];
     _contours = [NSMutableArray array];
+    _components = [NSMutableArray array];
   }
   return self;
 }
@@ -40,6 +41,7 @@
   FSGlyph *glyph = [[FSGlyph allocWithZone:zone] initWithName:self.name layer:nil];
   glyph.unicodes = [self.unicodes copyWithZone:zone];
   glyph->_contours = [self.contours copyWithZone:zone];
+  glyph->_components = [self.contours copyWithZone:zone];
   return glyph;
 }
 
@@ -213,6 +215,120 @@
   [_contours insertObject:contour atIndex:index];
   contour.glyph = self;
   return YES;
+}
+
+- (FSComponent *)appendComponentWithGlyphName:(nonnull NSString *)glyphName
+                                       offset:(CGPoint)offset
+                                        scale:(CGPoint)scale {
+  FSComponent *component = [[FSComponent alloc] initWithBaseGlyphName:glyphName];
+  component.offset = offset;
+  component.scale = scale;
+  [_components addObject:component];
+  component.glyph = self;
+  return component;
+}
+
+- (FSComponent *)appendComponent:(nonnull FSComponent *)component {
+  FSComponent *copy = [component copy];
+  [_components addObject:copy];
+  copy.glyph = self;
+  return copy;
+}
+
+- (BOOL)removeComponent:(nonnull FSComponent *)component error:(NSError **)error {
+  NSUInteger index = [_components indexOfObject:component];
+  if (index == NSNotFound) {
+    if (error) {
+      NSString *desc = [NSString stringWithFormat:
+                        LocalizedString(@"Component not located in Glyph"),
+                        index];
+      NSDictionary *dict = @{ NSLocalizedDescriptionKey : desc };
+      *error = [NSError errorWithDomain:FontScriptErrorDomain
+                                   code:FontScriptErrorContourNotLocated
+                               userInfo:dict];
+    }
+    return NO;
+  }
+  [self removeComponentAtIndex:index error:error];
+  return YES;
+}
+
+- (BOOL)removeComponentAtIndex:(NSUInteger)index error:(NSError **)error {
+  if (index < _components.count) {
+    FSComponent *component = [_components objectAtIndex:index];
+    component.glyph = nil;
+    [_components removeObjectAtIndex:index];
+  } else {
+    if (error) {
+      NSString *desc = [NSString stringWithFormat:
+                        LocalizedString(@"No component located at index %u"),
+                        index];
+      NSDictionary *dict = @{ NSLocalizedDescriptionKey : desc };
+      *error = [NSError errorWithDomain:FontScriptErrorDomain
+                                   code:FontScriptErrorContourNotLocated
+                               userInfo:dict];
+    }
+    return NO;
+  }
+  return YES;
+}
+
+- (void)clearComponents {
+  for (FSComponent *component in _components) {
+    component.glyph = nil;
+  }
+  [_components removeAllObjects];
+}
+
+- (BOOL)reorderComponent:(nonnull FSComponent *)component toIndex:(NSUInteger)index error:(NSError **)error {
+  if (index >= _components.count) {
+    if (error) {
+      NSString *desc = [NSString stringWithFormat:
+                        LocalizedString(@"Index %u is out-of-range"),
+                        index];
+      NSDictionary *dict = @{ NSLocalizedDescriptionKey : desc };
+      *error = [NSError errorWithDomain:FontScriptErrorDomain
+                                   code:FontScriptErrorIndexOutOfRange
+                               userInfo:dict];
+    }
+    return NO;
+  }
+  [self removeComponent:component error:error];
+  if (error && *error) {
+    return NO;
+  }
+  [_components insertObject:component atIndex:index];
+  component.glyph = self;
+  return YES;
+}
+
+- (BOOL)decomposeWithError:(NSError **)error {
+  for (FSComponent *component in self.components) {
+    if (![component decomposeWithError:error]) {
+      return NO;
+    }
+  }
+  return YES;
+}
+
+- (BOOL)decomposeComponent:(nonnull FSComponent *)component error:(NSError **)error {
+  if (!self.layer) {
+    if (error) {
+      NSString *desc = LocalizedString(@"Glyph is not a member of a layer");
+      NSDictionary *dict = @{ NSLocalizedDescriptionKey : desc };
+      *error = [NSError errorWithDomain:FontScriptErrorDomain
+                                   code:FontScriptErrorGlyphNotFoundInLayer
+                               userInfo:dict];
+    }
+    return NO;
+  }
+
+  FSGlyph *glyph = self.layer.glyphs[component.baseGlyphName];
+  for (FSContour *contour in glyph.contours) {
+    [contour transformBy:component.transformation];
+    [self appendContour:contour offset:CGPointZero];
+  }
+  return [self removeComponent:component error:error];
 }
 
 - (void)moveBy:(CGPoint)point {

@@ -60,6 +60,16 @@ NS_SWIFT_NAME(Glyph)
 
 // Components
 @property(readonly) NSArray<FSComponent *> *components;
+- (FSComponent *)appendComponentWithGlyphName:(nonnull NSString *)glyphName
+                                       offset:(CGPoint)offset
+                                        scale:(CGPoint)scale;
+- (FSComponent *)appendComponent:(nonnull FSComponent *)component;
+- (BOOL)removeComponent:(nonnull FSComponent *)component error:(NSError **)error;
+- (BOOL)removeComponentAtIndex:(NSUInteger)index error:(NSError **)error;
+- (void)clearComponents;
+- (BOOL)reorderComponent:(nonnull FSComponent *)component toIndex:(NSUInteger)index error:(NSError **)error;
+- (BOOL)decomposeWithError:(NSError **)error;
+- (BOOL)decomposeComponent:(nonnull FSComponent *)component error:(NSError **)error;
 
 // Anchors
 

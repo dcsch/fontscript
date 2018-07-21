@@ -54,7 +54,7 @@
 
 - (NSString *)identifier {
   if (_identifier == nil) {
-    _identifier = [FSIdentifier RandomIdentifierWithError: nil];
+    _identifier = [FSIdentifier RandomIdentifierWithError:nil];
   }
   return _identifier;
 }
@@ -160,6 +160,12 @@
       [_points removeObject:pt];
       break;
     }
+  }
+}
+
+- (void)transformBy:(CGAffineTransform)transform {
+  for (FSPoint *point in _points) {
+    [point transformBy:transform];
   }
 }
 

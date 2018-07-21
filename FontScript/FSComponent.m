@@ -7,8 +7,17 @@
 //
 
 #import "FSComponent.h"
+#import "FSGlyph.h"
 #import "FSPen.h"
+#import "FSIdentifier.h"
 #import "FSPointToSegmentPen.h"
+
+@interface FSComponent ()
+{
+  NSString *_identifier;
+}
+
+@end
 
 @implementation FSComponent
 
@@ -23,11 +32,39 @@
 
 - (nonnull id)copyWithZone:(nullable NSZone *)zone {
   FSComponent *copy = [[FSComponent allocWithZone:zone] initWithBaseGlyphName:_baseGlyphName];
+  copy->_transformation = _transformation;
   return copy;
 }
 
 - (void)dealloc {
   NSLog(@"Component dealloc");
+}
+
+- (FSLayer *)layer {
+  return self.glyph.layer;
+}
+
+- (FSFont *)font {
+  return self.glyph.font;
+}
+
+- (NSString *)identifier {
+  if (_identifier == nil) {
+    _identifier = [FSIdentifier RandomIdentifierWithError:nil];
+  }
+  return _identifier;
+}
+
+- (NSUInteger)index {
+  return [self.glyph.components indexOfObject:self];
+}
+
+- (void)setIndex:(NSUInteger)index {
+  [self.glyph reorderComponent:self toIndex:index error:nil];
+}
+
+- (void)setIndex:(NSUInteger)index error:(NSError **)error {
+  [self.glyph reorderComponent:self toIndex:index error:error];
 }
 
 - (CGPoint)offset {
@@ -61,6 +98,10 @@
                                identifier:_identifier
                                     error:&error];
   [pointPen endPath];
+}
+
+- (BOOL)decomposeWithError:(NSError **)error {
+  return [self.glyph decomposeComponent:self error:error];
 }
 
 @end

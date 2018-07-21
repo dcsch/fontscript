@@ -21,7 +21,7 @@ NS_SWIFT_NAME(Component)
 - (instancetype)init __attribute__((unavailable));
 
 // Parents
-@property(readonly, weak) FSGlyph *glyph;
+@property(weak) FSGlyph *glyph;
 @property(readonly, weak) FSLayer *layer;
 @property(readonly, weak) FSFont *font;
 
@@ -44,6 +44,7 @@ NS_SWIFT_NAME(Component)
 // Transformations
 
 // Normalization
+- (BOOL)decomposeWithError:(NSError **)error;
 
 // Environment
 
