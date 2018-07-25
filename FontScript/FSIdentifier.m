@@ -7,7 +7,7 @@
 //
 
 #import "FSIdentifier.h"
-#import "FontScript.h"
+#import "FontScriptFunctions.h"
 
 static NSString *_RandomIdentifier(NSArray<NSString *> *existing, NSUInteger recursionDepth, NSError **error) {
 
@@ -15,7 +15,7 @@ static NSString *_RandomIdentifier(NSArray<NSString *> *existing, NSUInteger rec
   if (recursionDepth >= 50) {
     if (error) {
       NSString *desc = [NSString stringWithFormat:
-                        LocalizedString(@"Failed to create a unique identifier"),
+                        FSLocalizedString(@"Failed to create a unique identifier"),
                         index];
       NSDictionary *dict = @{ NSLocalizedDescriptionKey : desc };
       *error = [NSError errorWithDomain:FontScriptErrorDomain

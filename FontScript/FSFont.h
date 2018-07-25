@@ -6,7 +6,8 @@
 //  Copyright © 2018 David Schweinsberg. All rights reserved.
 //
 
-#import <AppKit/AppKit.h>
+#import <Foundation/Foundation.h>
+#import <CoreGraphics/CoreGraphics.h>
 
 @class FSInfo;
 @class FSLayer;
@@ -30,6 +31,6 @@ NS_SWIFT_NAME(Font)
 @property(readonly) FSInfo *info;
 
 // Layers
-- (FSLayer *)newLayerWithName:(nonnull NSString *)name color:(NSColor *)color;
+- (FSLayer *)newLayerWithName:(nonnull NSString *)name color:(CGColorRef)color;
 
 @end

@@ -1,13 +1,15 @@
 //
-//  FontScriptPrivate.h
+//  FSPythonObjects.h
 //  FontScript
 //
-//  Created by David Schweinsberg on 5/30/18.
+//  Created by David Schweinsberg on 7/23/18.
 //  Copyright © 2018 David Schweinsberg. All rights reserved.
 //
 
 #include <FontScript/FontScript.h>
 #include <Python/Python.h>
+
+#define PYOBJECT_ASSOCIATED_OBJECT "pyobject"
 
 typedef struct {
   PyObject_HEAD
@@ -50,3 +52,5 @@ extern PyTypeObject InfoType;
 extern PyTypeObject LayerType;
 extern PyTypeObject GlyphType;
 extern PyObject *FontScriptError;
+
+PyMODINIT_FUNC PyInit_fontParts(void);

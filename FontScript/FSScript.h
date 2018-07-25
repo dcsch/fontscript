@@ -15,14 +15,20 @@ NS_SWIFT_NAME(Script)
 
 @property(readonly) NSArray<FSFont *> *fonts;
 
++ (FSScript *)Shared;
+
 - (nonnull instancetype)initWithPath:(NSString *)path NS_DESIGNATED_INITIALIZER;
 - (instancetype)init __attribute__((unavailable));
-
-- (void)importModule:(NSString *)moduleName;
-- (void)runModule:(NSString *)moduleName function:(NSString *)functionName arguments:(NSArray *)args;
 
 - (FSFont *)newFontWithFamilyName:(NSString *)familyName
                         styleName:(NSString *)styleName
                     showInterface:(BOOL)showInterface;
+
+@end
+
+@interface FSScript (Python)
+
+- (void)importModule:(NSString *)moduleName;
+- (void)runModule:(NSString *)moduleName function:(NSString *)functionName arguments:(NSArray *)args;
 
 @end

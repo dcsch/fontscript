@@ -67,8 +67,8 @@
   [self.glyph reorderContour:self toIndex:index error:nil];
 }
 
-- (void)setIndex:(NSUInteger)index error:(NSError **)error {
-  [self.glyph reorderContour:self toIndex:index error:error];
+- (BOOL)setIndex:(NSUInteger)index error:(NSError **)error {
+  return [self.glyph reorderContour:self toIndex:index error:error];
 }
 
 - (BOOL)clockwise {

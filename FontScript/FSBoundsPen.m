@@ -7,6 +7,11 @@
 //
 
 #import "FSBoundsPen.h"
+#if TARGET_OS_OSX
+#import "NSValue+CGPoint.h"
+#elif TARGET_OS_IPHONE
+#import <UIKit/UIKit.h>
+#endif
 
 static void calcCubicParameters(CGPoint pt1, CGPoint pt2, CGPoint pt3, CGPoint pt4,
                                 CGPoint *a, CGPoint *b, CGPoint *c, CGPoint *d) {
@@ -134,14 +139,14 @@ static void calcCubicPoints(CGPoint pt1,
 
 - (void)curveToPoints:(NSArray<NSValue *> *)points {
   if (points.count == 3) {
-    [self curveToPoint:points[2].pointValue
-              control1:points[0].pointValue
-              control2:points[1].pointValue];
+    [self curveToPoint:points[2].CGPointValue
+              control1:points[0].CGPointValue
+              control2:points[1].CGPointValue];
   } else if (points.count == 2) {
-    [self qCurveToPoint:points[1].pointValue
-                control:points[0].pointValue];
+    [self qCurveToPoint:points[1].CGPointValue
+                control:points[0].CGPointValue];
   } else if (points.count == 1) {
-    [self lineToPoint:points[0].pointValue];
+    [self lineToPoint:points[0].CGPointValue];
   }
 }
 

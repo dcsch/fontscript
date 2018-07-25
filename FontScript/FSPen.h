@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreGraphics/CoreGraphics.h>
 
 NS_SWIFT_NAME(Pen)
 @protocol FSPen <NSObject>

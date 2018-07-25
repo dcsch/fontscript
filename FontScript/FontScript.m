@@ -7,11 +7,3 @@
 //
 
 #import "FontScript.h"
-
-NSString *LocalizedString(NSString *string) {
-  return
-  NSLocalizedStringFromTableInBundle(string,
-                                     nil,
-                                     [NSBundle bundleWithIdentifier:@"com.typista.FontScript"],
-                                     nil);
-}

@@ -8,6 +8,11 @@
 
 #import "FSPointToSegmentPen.h"
 #import "FSPoint.h"
+#if TARGET_OS_OSX
+#import "NSValue+CGPoint.h"
+#elif TARGET_OS_IPHONE
+#import <UIKit/UIKit.h>
+#endif
 
 @interface FSPointToSegmentPen ()
 {
@@ -95,21 +100,21 @@
   [_points addObjectsFromArray:points];
 }
 
-- (void)addPoint:(CGPoint)point
-            type:(FSPointType)type
-          smooth:(BOOL)smooth {
-  [self addPoint:point
-            type:type
-          smooth:smooth
-            name:nil
-      identifier:nil];
+- (void)addCGPoint:(CGPoint)point
+              type:(FSPointType)type
+            smooth:(BOOL)smooth {
+  [self addCGPoint:point
+              type:type
+            smooth:smooth
+              name:nil
+        identifier:nil];
 }
 
-- (void)addPoint:(CGPoint)point
-            type:(FSPointType)type
-          smooth:(BOOL)smooth
-            name:(nullable NSString *)name
-      identifier:(nullable NSString *)identifier {
+- (void)addCGPoint:(CGPoint)point
+              type:(FSPointType)type
+            smooth:(BOOL)smooth
+              name:(nullable NSString *)name
+        identifier:(nullable NSString *)identifier {
   FSPoint *pt = [[FSPoint alloc] initWithPoint:point type:type smooth:smooth];
   pt.name = name;
 //  pt.identifier = identifier;
@@ -161,7 +166,7 @@
           NSLog(@"Bad line segment point count: %lu", (unsigned long)cgPoints.count);
         }
         if (segmentCount != i + 1 || !closed) {
-          [_pen lineToPoint:[cgPoints[0] pointValue]];
+          [_pen lineToPoint:[cgPoints[0] CGPointValue]];
         }
         break;
       case FSSegmentTypeCurve:

@@ -4,7 +4,12 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>FontScript.xcscheme</key>
+		<key>FontScript iOS.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>FontScript macOS.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>

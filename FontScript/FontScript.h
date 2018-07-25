@@ -6,27 +6,13 @@
 //  Copyright © 2018 David Schweinsberg. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for FontScript.
 FOUNDATION_EXPORT double FontScriptVersionNumber;
 
 //! Project version string for FontScript.
 FOUNDATION_EXPORT const unsigned char FontScriptVersionString[];
-
-FOUNDATION_EXPORT NSErrorDomain const FontScriptErrorDomain;
-
-NSString *LocalizedString(NSString *string);
-
-NS_ERROR_ENUM(FontScriptErrorDomain)
-{
-  FontScriptErrorUnknown = -1,
-  FontScriptErrorGlyphNameInUse = -999,
-  FontScriptErrorContourNotLocated = -1000,
-  FontScriptErrorIndexOutOfRange = -1001,
-  FontScriptErrorIdentifierNotUnique = -1002,
-  FontScriptErrorGlyphNotFoundInLayer = -1003
-};
 
 #import <FontScript/FSScript.h>
 #import <FontScript/FSFont.h>
@@ -43,3 +29,4 @@ NS_ERROR_ENUM(FontScriptErrorDomain)
 #import <FontScript/FSPointToSegmentPen.h>
 #import <FontScript/FSBoundsPen.h>
 #import <FontScript/FSIdentifier.h>
+#import <FontScript/FontScriptFunctions.h>
